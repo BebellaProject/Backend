@@ -1,0 +1,7 @@
+{
+  "name": "bebella-admin",
+  "directory": "bower_components",
+  "private": true,
+  "dependencies": {
+  }
+}
