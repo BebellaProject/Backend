@@ -14,6 +14,8 @@ class CreateProductOptionsTable extends Migration
     {
         Schema::create('product_options', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

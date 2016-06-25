@@ -14,6 +14,8 @@ class CreateChannelRecipesTable extends Migration
     {
         Schema::create('channel_recipes', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

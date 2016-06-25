@@ -99,6 +99,75 @@ Route::group([
     
     Route::get('/', 'IndexController@getIndex');
     
+    Route::group([
+        'namespace' => 'Dashboard',
+        'prefix' => 'dashboard'
+    ], function () {
+        
+        Route::get('/', 'ViewController@getIndex');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Category',
+        'prefix' => 'category'
+    ], function () {
+        
+        Route::get('/new', 'ViewController@getNew');
+        Route::get('/list', 'ViewController@getList');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Channel',
+        'prefix' => 'channel'
+    ], function () {
+        
+        Route::get('/new', 'ViewController@getNew');
+        Route::get('/list', 'ViewController@getList');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Product',
+        'prefix' => 'product'
+    ], function () {
+        
+        Route::get('/new', 'ViewController@getNew');
+        Route::get('/list', 'ViewController@getList');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'ProductOption',
+        'prefix' => 'product_option'
+    ], function () {
+        
+        Route::get('/new', 'ViewController@getNew');
+        Route::get('/list', 'ViewController@getList');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Recipe',
+        'prefix' => 'recipe'
+    ], function () {
+        
+        Route::get('/new', 'ViewController@getNew');
+        Route::get('/list', 'ViewController@getList');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'User',
+        'prefix' => 'user'
+    ], function () {
+        
+        Route::get('/new', 'ViewController@getNew');
+        Route::get('/list', 'ViewController@getList');
+        
+    });
+    
 });
 
 Route::group([

@@ -13,9 +13,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="msapplication-tap-highlight" content="no">
-  <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
-  <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-  <title>Page Blank | Materialize - Material Design Admin Template</title>
+  <meta name="description" content="Admin Area for the Bebella application">
+  <meta name="keywords" content="Bebella">
+  <meta name="author" content="Diego Rodrigues <diego.mrodrigues@outlook.com>">
+  
+  <title>Bebella - Admin</title>
 
   <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
   <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
@@ -38,6 +40,8 @@
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
   </div>
+    
+  <input type="hidden" id="APP_URL" value="<% $APP_URL %>" /> 
   
   <header id="header" class="page-topbar">
         <div class="navbar-fixed">
@@ -136,239 +140,99 @@
                 </div>
             </div>
             </li>
-            <li class="bold"><a href="index.html" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a>
+            <li class="bold"><a ui-sref="home" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a>
             </li>
+            
             <li class="no-padding">
                 <ul class="collapsible collapsible-accordion">
-                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-view-carousel"></i> Layouts</a>
+                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-social-people"></i> Usuários</a>
                         <div class="collapsible-body">
                             <ul>
-                                <li><a href="layout-fullscreen.html">Full Screen</a>
+                                <li><a ui-sref="user_new">Novo</a>
                                 </li>
-                                <li><a href="layout-horizontal-menu.html">Horizontal Menu</a>
+                                <li><a ui-sref="user_list">Lista</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                 </ul>
             </li>
-            <li class="bold"><a href="app-email.html" class="waves-effect waves-cyan"><i class="mdi-communication-email"></i> Mailbox <span class="new badge">4</span></a>
-            </li>
-            <li class="bold"><a href="app-calendar.html" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Calender</a>
-            </li>
+            
             <li class="no-padding">
                 <ul class="collapsible collapsible-accordion">
-                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-invert-colors"></i> CSS</a>
+                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-image-portrait"></i> Canais</a>
                         <div class="collapsible-body">
                             <ul>
-                                <li><a href="css-typography.html">Typography</a>
+                                <li><a ui-sref="channel_new">Novo</a>
                                 </li>
-                                <li><a href="css-icons.html">Icons</a>
-                                </li>
-                                <li><a href="css-animations.html">Animations</a>
-                                </li>
-                                <li><a href="css-shadow.html">Shadow</a>
-                                </li>
-                                <li><a href="css-media.html">Media</a>
-                                </li>
-                                <li><a href="css-sass.html">Sass</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-image-palette"></i> UI Elements</a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a href="ui-alerts.html">Alerts</a>
-                                </li>
-                                <li><a href="ui-buttons.html">Buttons</a>
-                                </li>
-                                <li><a href="ui-badges.html">Badges</a>
-                                </li>
-                                <li><a href="ui-breadcrumbs.html">Breadcrumbs</a>
-                                </li>
-                                <li><a href="ui-collections.html">Collections</a>
-                                </li>
-                                <li><a href="ui-collapsibles.html">Collapsibles</a>
-                                </li>
-                                <li><a href="ui-tabs.html">Tabs</a>
-                                </li>
-                                <li><a href="ui-navbar.html">Navbar</a>
-                                </li>
-                                <li><a href="ui-pagination.html">Pagination</a>
-                                </li>
-                                <li><a href="ui-preloader.html">Preloader</a>
-                                </li>
-                                <li><a href="ui-toasts.html">Toasts</a>
-                                </li>
-                                <li><a href="ui-tooltip.html">Tooltip</a>
-                                </li>
-                                <li><a href="ui-waves.html">Waves</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-av-queue"></i> Advanced UI <span class="new badge"></span></a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a href="advanced-ui-chips.html">Chips</a>
-                                </li>
-                                <li><a href="advanced-ui-cards.html">Cards</a>
-                                </li>
-                                <li><a href="advanced-ui-modals.html">Modals</a>
-                                </li>
-                                <li><a href="advanced-ui-media.html">Media</a>
-                                </li>
-                                <li><a href="advanced-ui-range-slider.html">Range Slider</a>
-                                </li>
-                                <li><a href="advanced-ui-sweetalert.html">SweetAlert</a>
-                                </li>
-                                <li><a href="advanced-ui-nestable.html">Shortable & Nestable</a>
-                                </li>
-                                <li><a href="advanced-ui-translation.html">Language Translation</a>
-                                </li>
-                                <li><a href="advanced-ui-highlight.html">Highlight</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a href="app-widget.html" class="waves-effect waves-cyan"><i class="mdi-device-now-widgets"></i> Widgets</a>
-                    </li>
-                    <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-editor-border-all"></i> Tables</a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a href="table-basic.html">Basic Tables</a>
-                                </li>
-                                <li><a href="table-data.html">Data Tables</a>
-                                </li>
-                                <li><a href="table-jsgrid.html">jsGrid</a>
-                                </li>
-                                <li><a href="table-editable.html">Editable Table</a>
-                                </li>
-                                <li><a href="table-floatThead.html">floatThead</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-editor-insert-comment"></i> Forms <span class="new badge"></span></a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a href="form-elements.html">Form Elements</a>
-                                </li>
-                                <li><a href="form-layouts.html">Form Layouts</a>
-                                </li>
-                                <li><a href="form-validation.html">Form Validations</a>
-                                </li>
-                                <li><a href="form-masks.html">Form Masks</a>
-                                </li>
-                                <li><a href="form-file-uploads.html">File Uploads</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a class="collapsible-header  waves-effect waves-cyan active"><i class="mdi-social-pages"></i> Pages</a>
-                        <div class="collapsible-body">
-                            <ul>                                        
-                                <li><a href="page-contact.html">Contact Page</a>
-                                </li>
-                                <li><a href="page-todo.html">ToDos</a>
-                                </li>
-                                <li><a href="page-blog-1.html">Blog Type 1</a>
-                                </li>
-                                <li><a href="page-blog-2.html">Blog Type 2</a>
-                                </li>
-                                <li><a href="page-404.html">404</a>
-                                </li>
-                                <li><a href="page-500.html">500</a>
-                                </li>
-                                <li class="active"><a href="page-blank.html">Blank</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-action-shopping-cart"></i> eCommers</a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a href="eCommerce-products-page.html">Products Page</a>
-                                </li>                                        
-                                <li><a href="eCommerce-pricing.html">Pricing Table</a>
-                                </li>
-                                <li><a href="eCommerce-invoice.html">Invoice</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-image-image"></i> Medias</a>
-                        <div class="collapsible-body">
-                            <ul>                                        
-                                <li><a href="media-gallary-page.html">Gallery Page</a>
-                                </li>
-                                <li><a href="media-hover-effects.html">Image Hover Effects</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-action-account-circle"></i> User</a>
-                        <div class="collapsible-body">
-                            <ul>     
-                                <li><a href="user-profile-page.html">User Profile</a>
-                                </li>                                   
-                                <li><a href="user-login.html">Login</a>
-                                </li>                                        
-                                <li><a href="user-register.html">Register</a>
-                                </li>
-                                <li><a href="user-forgot-password.html">Forgot Password</a>
-                                </li>
-                                <li><a href="user-lock-screen.html">Lock Screen</a>
-                                </li>                                        
-                                
-                            </ul>
-                        </div>
-                    </li>
-                    
-                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-editor-insert-chart"></i> Charts</a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a href="charts-chartjs.html">Chart JS</a>
-                                </li>
-                                <li><a href="charts-chartist.html">Chartist</a>
-                                </li>
-                                <li><a href="charts-morris.html">Morris Charts</a>
-                                </li>
-                                <li><a href="charts-xcharts.html">xCharts</a>
-                                </li>
-                                <li><a href="charts-flotcharts.html">Flot Charts</a>
-                                </li>
-                                <li><a href="charts-sparklines.html">Sparkline Charts</a>
+                                <li><a ui-sref="channel_list">Lista</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                 </ul>
             </li>
-            <li class="li-hover"><div class="divider"></div></li>
-            <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>
-            <li><a href="angular-ui.html"><i class="mdi-action-verified-user"></i> Angular UI  <span class="new badge"></span></a>
-            </li>
-            <li><a href="css-grid.html"><i class="mdi-image-grid-on"></i> Grid</a>
-            </li>
-            <li><a href="css-color.html"><i class="mdi-editor-format-color-fill"></i> Color</a>
-            </li>
-            <li><a href="css-helpers.html"><i class="mdi-communication-live-help"></i> Helpers</a>
-            </li>
-            <li><a href="changelogs.html"><i class="mdi-action-swap-vert-circle"></i> Changelogs</a>
-            </li>                    
-            <li class="li-hover"><div class="divider"></div></li>
-            <li class="li-hover"><p class="ultra-small margin more-text">Daily Sales</p></li>
-            <li class="li-hover">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <div class="sample-chart-wrapper">                            
-                            <div class="ct-chart ct-golden-section" id="ct2-chart"></div>
+            
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-label-outline"></i> Categorias</a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a ui-sref="category_new">Novo</a>
+                                </li>
+                                <li><a ui-sref="category_list">Lista</a>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </li>
+            
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-description"></i> Receitas</a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a ui-sref="recipe_new">Novo</a>
+                                </li>
+                                <li><a ui-sref="recipe_list">Lista</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-image-crop-3-2"></i> Produtos</a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a ui-sref="product_new">Novo</a>
+                                </li>
+                                <li><a ui-sref="product_list">Lista</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-maps-local-offer"></i> Opções de Produto</a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a ui-sref="product_option_new">Novo</a>
+                                </li>
+                                <li><a ui-sref="product_option_list">Lista</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            
         </ul>
         <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
         </aside>
@@ -394,23 +258,7 @@
         </div>
   
         <div class="container">
-          <div class="section">
-
-            <p class="caption">A Simple Blank Page to use it for your custome design and elements.</p>
-            <div class="divider"></div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-          </div>
-            <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
-                <a class="btn-floating btn-large">
-                  <i class="mdi-action-stars"></i>
-                </a>
-                <ul>
-                  <li><a href="css-helpers.html" class="btn-floating red"><i class="large mdi-communication-live-help"></i></a></li>
-                  <li><a href="app-widget.html" class="btn-floating yellow darken-1"><i class="large mdi-device-now-widgets"></i></a></li>
-                  <li><a href="app-calendar.html" class="btn-floating green"><i class="large mdi-editor-insert-invitation"></i></a></li>
-                  <li><a href="app-email.html" class="btn-floating blue"><i class="large mdi-communication-email"></i></a></li>
-                </ul>
-            </div>
+          <div class="section" ui-view="MainContent"></div>
         </div>
       </section>
       <aside id="right-sidebar-nav">
@@ -551,14 +399,6 @@
   
     </div>
   </div>
-  <footer class="page-footer">
-    <div class="footer-copyright">
-      <div class="container">
-        <span>Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">GeeksLabs</a> All rights reserved.</span>
-        <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span>
-        </div>
-    </div>
-  </footer>
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/jquery-1.11.2.min.js"></script>    
     <script type="text/javascript" src="<% $STATIC_URL %>/js/materialize.min.js"></script>
     <!--prism
@@ -567,6 +407,11 @@
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.js"></script>   
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
+    
+    <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    
+    <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.1/bebella.js"></script>
     
 </body>
 

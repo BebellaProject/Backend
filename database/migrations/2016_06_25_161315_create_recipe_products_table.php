@@ -14,6 +14,8 @@ class CreateRecipeProductsTable extends Migration
     {
         Schema::create('recipe_products', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

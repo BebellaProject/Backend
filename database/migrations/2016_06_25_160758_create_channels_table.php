@@ -14,6 +14,8 @@ class CreateChannelsTable extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

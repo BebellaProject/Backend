@@ -14,6 +14,8 @@ class CreateRecipeTagsTable extends Migration
     {
         Schema::create('recipe_tags', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

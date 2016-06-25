@@ -14,6 +14,8 @@ class CreateRecipePhotosTable extends Migration
     {
         Schema::create('recipe_photos', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
