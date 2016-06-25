@@ -2,6 +2,8 @@
 
 namespace Bebella\Http\Controllers\Auth;
 
+use Auth;
+
 use Bebella\User;
 use Validator;
 use Bebella\Http\Controllers\Controller;
@@ -37,7 +39,6 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -68,5 +69,12 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    
+    public function getLogout()
+    {
+        Auth::logout();
+        
+        return redirect()->to('auth/login');
     }
 }

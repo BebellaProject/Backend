@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecipeProductsTable extends Migration
+class CreateStoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateRecipeProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_products', function (Blueprint $table) {
+        Schema::create('stores', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->unsignedInteger('recipe_id')->nullable(false);
-            $table->unsignedInteger('product_id')->nullable(false);
+            $table->unsignedInteger('user_id')->nullable(false);
             
-            $table->boolean('active')->default(true);
+            $table->string('name')->nullable(false);
+            
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateRecipeProductsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('recipe_products');
+        Schema::drop('stores');
     }
 }

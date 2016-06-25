@@ -13,7 +13,7 @@ Route::group([
 
 Route::group([
     'namespace' => 'Auth',
-    'preifx' => 'auth',
+    'prefix' => 'auth',
     'middleware' => 'auth'
 ], function () {
     
@@ -94,7 +94,8 @@ Route::group([
 
 Route::group([
     'namespace' => 'Admin',
-    'prefix' => 'admin'
+    'prefix' => 'admin',
+    'middleware' => ['auth', 'admin']
 ], function () {
     
     Route::get('/', 'IndexController@getIndex');

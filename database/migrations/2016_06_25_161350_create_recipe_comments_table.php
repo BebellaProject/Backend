@@ -15,6 +15,11 @@ class CreateRecipeCommentsTable extends Migration
         Schema::create('recipe_comments', function (Blueprint $table) {
             $table->increments('id');
             
+            $table->unsignedInteger('recipe_id')->nullable(false);
+            $table->unsignedInteger('user_id')->nullable(false);
+            
+            $table->text('comment')->nullable(false);
+            
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

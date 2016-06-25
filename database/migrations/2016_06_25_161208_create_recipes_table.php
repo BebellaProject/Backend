@@ -15,6 +15,11 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->increments('id');
             
+            $table->unsignedInteger('category_id')->nullable(false);
+            
+            $table->string('name')->nullable(false);
+            $table->string('desc')->nullable(false);
+            
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
