@@ -1,4 +1,4 @@
-var Bebella = angular.module('Bebella', ['ui.router']);
+var Bebella = angular.module('Bebella', ['ui.router', 'datatables']);
 
 var APP_URL = $("#APP_URL").val();
 
@@ -10,22 +10,235 @@ function api_v1(path) {
     return APP_URL + '/api/v1/' + path;
 }
 
+function attr(dest, src) {
+    for (var e in src) {
+        if (e == "created_at" || e == "updated_at") {
+            dest[e] = new Date(src[e]);
+        } else if (e.startsWith("has_") || e.startsWith("is_") || e.startsWith("used_for_") || e == "active") {
+            dest[e] = (src[e] === 1);
+        } else {
+            dest[e] = src[e];
+        }
+    }
+}
+
 Bebella.run([
     function () {
         
     }
 ]);
 
-Bebella.controller('CategoryListCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Category List";
+Bebella.factory('Category', [
+    function () {
+        var Category = new Function();
+        
+        return Category;
     }
 ]);
 
 
-Bebella.controller('CategoryNewCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Category New";
+Bebella.factory('User', [
+    function () {
+        var User = new Function();
+        
+        return User;
+    }
+]);
+
+
+Bebella.service('CurrentCategory', ['Category',
+    function (Category) {
+        var service = this;
+        
+        var _category = new Category();
+        
+        service.get = function () {
+            return _category;
+        };
+        
+        service.clear = function () {
+            delete _category;
+            
+            _category = new Category();
+        };
+        
+    }
+]);
+
+
+Bebella.service('CategoryRepository', ['$http', '$q', 'Category',
+    function ($http, $q, Category) {
+        var repository = this;
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('category/find/' + id)).then(
+                function (res) {
+                    var category = new Category();
+                    
+                    attr(category, res.data);
+                    
+                    deferred.resolve(category);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("category/all")).then(
+                function (res) {
+                    var categories = _.map(res.data, function (json) {
+                        var category = new Category();
+                        
+                        attr(category, json);
+                        
+                        return category;
+                    });
+                    
+                    deferred.resolve(categories);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.edit = function (category) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(category);
+            
+            $http.post(api_v1("category/edit"), data).then(
+                 function (res) {
+                     deferred.resolve(category);
+                 },
+                 function (res) {
+                     deferred.reject(res);
+                 }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (category) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(category);
+            
+            $http.post(api_v1("category/save"), data).then(
+                function (res) {
+                    category.id = res.data.id;
+                    
+                    deferred.resolve(category);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
+
+
+
+Bebella.service('UserRepository', ['$http', '$q', 'User',
+    function ($http, $q, User) {
+        var repository = this;
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("user/all")).then(
+                function (res) {
+                    
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
+
+
+Bebella.controller('CategoryEditCtrl', ['$scope', '$stateParams', 'CategoryRepository',
+    function ($scope, $stateParams, CategoryRepository) {
+    
+        $scope.edit = function () {
+            CategoryRepository.edit($scope.category).then(
+                function onSuccess (category) {
+                    alert("Categoria editada com sucesso.");
+                },
+                function onError (res) {
+                    alert("Erro ao criar esta categoria.");
+                }
+            );
+        };
+        
+        CategoryRepository.find($stateParams.categoryId).then(
+            function onSuccess (category) {
+                $scope.category = category;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção dos dados desta categoria");
+            }
+        );
+        
+    }
+]);
+
+
+
+
+Bebella.controller('CategoryListCtrl', ['$scope', 'CategoryRepository',
+    function ($scope, CategoryRepository) {
+        
+        CategoryRepository.all().then(
+            function onSuccess (list) {
+                $scope.categories = list;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção da lista de categorias");
+            }
+        );
+        
+    }
+]);
+
+
+Bebella.controller('CategoryNewCtrl', ['$scope', 'CurrentCategory', 'CategoryRepository',
+    function ($scope, CurrentCategory, CategoryRepository) {
+        $scope.category = CurrentCategory.get();
+    
+        $scope.create = function () {
+            CategoryRepository.save($scope.category).then(
+                function onSuccess (category) {
+                    alert("Categoria cadastrada com sucesso.");
+                    CurrentCategory.clear();
+                },
+                function onError (res) {
+                    alert("Erro ao criar esta categoria.");
+                }
+            );
+        };
+        
+        $scope.clear = function () {
+            CurrentCategory.clear();
+            $scope.category = CurrentCategory.get();
+        };
     }
 ]);
 
@@ -91,6 +304,21 @@ Bebella.controller('RecipeNewCtrl', ['$scope',
 
 
 
+Bebella.controller('StoreListCtrl', ['$scope',
+    function ($scope) {
+        $scope.test = "Store List";
+    }
+]);
+
+
+Bebella.controller('StoreNewCtrl', ['$scope',
+    function ($scope) {
+        $scope.test = "Store New";
+    }
+]);
+
+
+
 Bebella.controller('UserListCtrl', ['$scope',
     function ($scope) {
         $scope.test = "User List";
@@ -104,6 +332,29 @@ Bebella.controller('UserNewCtrl', ['$scope',
     }
 ]);
 
+
+
+Bebella.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader();
+                
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                    });
+                };
+                
+                reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    };
+}]);
 
 
 Bebella.config(['$stateProvider', '$urlRouterProvider',
@@ -163,6 +414,33 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                     views: {
                         MainContent: {
                             templateUrl: view('category/list')
+                        }
+                    }
+                })
+                
+                .state('category_edit', {
+                    url: '/category/edit/{categoryId}',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('category/edit')
+                        }
+                    }
+                })
+                
+                .state('store_new', {
+                    url: '/store/new',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('store/new')
+                        }
+                    }
+                })
+                
+                .state('store_list', {
+                    url: '/store/list',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('store/list')
                         }
                     }
                 })

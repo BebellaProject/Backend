@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Bebella\Events\SomeEvent' => [
-            'Bebella\Listeners\EventListener',
+        'Bebella\Events\Admin\CategoryWasCreated' => [
+            'Bebella\Listeners\Admin\CategoryImageSaving',
         ],
     ];
 

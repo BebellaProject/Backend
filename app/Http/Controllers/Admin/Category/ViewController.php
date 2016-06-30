@@ -20,4 +20,9 @@ class ViewController extends Controller
         return view('admin.category.list');
     }
     
+    public function getEdit() 
+    {
+        return view('admin.category.edit');
+    }
+    
 }

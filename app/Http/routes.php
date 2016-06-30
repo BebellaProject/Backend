@@ -36,35 +36,41 @@ Route::group([
     ], function () {
         
         Route::group([
-            'namespace' => 'User',
             'prefix' => 'user'
         ], function () {
             
         });
         
         Route::group([
-            'namespace' => 'Channel',
             'prefix' => 'channel'
         ], function () {
             
         });
 
         Route::group([
-            'namespace' => 'Product',
+            'prefix' => 'category'
+        ], function () {
+            
+            Route::get('/all', 'CategoryController@all');
+            Route::get('/find/{id}', 'CategoryController@find');
+            Route::post('/save', 'CategoryController@save');
+            Route::post('/edit', 'CategoryController@edit');
+            
+        });
+        
+        Route::group([
             'prefix' => 'product'
         ], function () {
             
         });
 
         Route::group([
-            'namespace' => 'ProductOption',
             'prefix' => 'productOption'
         ], function () {
             
         });
 
         Route::group([
-            'namespace' => 'Recipe',
             'prefix' => 'recipe'
         ], function () {
             
@@ -116,12 +122,23 @@ Route::group([
         
         Route::get('/new', 'ViewController@getNew');
         Route::get('/list', 'ViewController@getList');
+        Route::get('/edit', 'ViewController@getEdit');
         
     });
     
     Route::group([
         'namespace' => 'Channel',
         'prefix' => 'channel'
+    ], function () {
+        
+        Route::get('/new', 'ViewController@getNew');
+        Route::get('/list', 'ViewController@getList');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Store',
+        'prefix' => 'store'
     ], function () {
         
         Route::get('/new', 'ViewController@getNew');

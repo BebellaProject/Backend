@@ -17,7 +17,7 @@ class DummyUsersSeeder extends Seeder
         
         $admUser->type = "admin";
         
-        $admUser->name = "Isabella";
+        $admUser->name = "Isabella Morais";
         $admUser->email = "bebela241199@hotmail.com";
         $admUser->password = bcrypt("senha");
         

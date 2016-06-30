@@ -59,6 +59,33 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                     }
                 })
                 
+                .state('category_edit', {
+                    url: '/category/edit/{categoryId}',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('category/edit')
+                        }
+                    }
+                })
+                
+                .state('store_new', {
+                    url: '/store/new',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('store/new')
+                        }
+                    }
+                })
+                
+                .state('store_list', {
+                    url: '/store/list',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('store/list')
+                        }
+                    }
+                })
+                
                 .state('channel_new', {
                     url: '/channel/new',
                     views: {

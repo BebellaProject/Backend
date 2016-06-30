@@ -1,6 +1,9 @@
 <div class="section" ng-controller="ProductNewCtrl">
 
-    <p class="caption">{{ test }}</p>
+    <p class="caption">Formulário para cadastro de novos produtos</p>
     <div class="divider"></div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+    
+    
 </div>
