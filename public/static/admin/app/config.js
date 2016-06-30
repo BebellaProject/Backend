@@ -122,6 +122,15 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                     }
                 })
                 
+                .state('product_edit', {
+                    url: '/product/edit/{productId}',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('product/edit')
+                        }
+                    }
+                })
+                
                 .state('product_option_new', {
                     url: '/product_option/new',
                     views: {

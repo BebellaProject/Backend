@@ -1,6 +1,6 @@
-<div class="section" ng-controller="ProductNewCtrl">
+<div class="section" ng-controller="ProductEditCtrl">
 
-    <p class="caption">Formulário para cadastro de novos produtos</p>
+    <p class="caption">Formulário de cadastro</p>
     <div class="divider"></div>
 
     <!--Input fields-->
@@ -44,22 +44,6 @@
                         </div>
                         
 
-                        <div class="row">
-                            <div class="col s12 m12 l12">
-                                <form action="#">
-                                    <div class="file-field input-field">
-                                        <div class="btn">
-                                            <span>Imagem</span>
-                                            <input type="file" accept="image/*" fileread="product.image">
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
                         
                     </form>
                 </div>
@@ -70,10 +54,7 @@
     <div id="submit-button" class="section">
         <div class="row">
             <div class="col s12 m12 l12 right-align">
-                <button class="btn waves-effect waves-light blue" type="button" ng-click="clear()" name="action">Limpar
-                    <i class="mdi-av-replay right"></i>
-                </button>
-                <button class="btn waves-effect waves-light green" type="button" ng-click="create()" name="action">Criar
+                <button class="btn waves-effect waves-light green" type="button" ng-click="edit()" name="action">Editar
                     <i class="mdi-content-send right"></i>
                 </button>
             </div>
@@ -81,3 +62,4 @@
     </div>
 
 </div>
+

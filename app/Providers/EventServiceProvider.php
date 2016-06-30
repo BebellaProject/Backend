@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'Bebella\Events\Admin\CategoryWasCreated' => [
             'Bebella\Listeners\Admin\CategoryImageSaving',
         ],
+        'Bebella\Events\Admin\ProductWasCreated' => [
+            'Bebella\Listeners\Admin\ProductImageSaving',
+        ],
     ];
 
     /**

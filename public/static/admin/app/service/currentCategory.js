@@ -9,8 +9,6 @@ Bebella.service('CurrentCategory', ['Category',
         };
         
         service.clear = function () {
-            delete _category;
-            
             _category = new Category();
         };
         

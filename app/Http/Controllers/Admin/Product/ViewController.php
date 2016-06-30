@@ -18,4 +18,9 @@ class ViewController extends Controller
     {
         return view('admin.product.list');
     }
+    
+    public function getEdit() 
+    {
+        return view('admin.product.edit');
+    }
 }

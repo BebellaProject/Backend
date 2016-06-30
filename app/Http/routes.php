@@ -62,6 +62,11 @@ Route::group([
             'prefix' => 'product'
         ], function () {
             
+            Route::get('/all', 'ProductController@all');
+            Route::get('/find/{id}', 'ProductController@find');
+            Route::post('/save', 'ProductController@save');
+            Route::post('/edit', 'ProductController@edit');
+            
         });
 
         Route::group([
@@ -153,6 +158,7 @@ Route::group([
         
         Route::get('/new', 'ViewController@getNew');
         Route::get('/list', 'ViewController@getList');
+        Route::get('/edit', 'ViewController@getEdit');
         
     });
     
