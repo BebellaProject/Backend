@@ -18,6 +18,16 @@ use Bebella\Http\Controllers\Controller;
 class ChannelController extends Controller
 {
 
+    public function all() 
+    {
+        return Channel::where('channels.active', true)
+                      ->join('users', function ($join) {
+                          $join->on('channels.user_id', '=', 'users.id');
+                      })
+                      ->select('channels.*', 'users.name as user_name')
+                      ->get();
+    }
+    
     public function save(Request $request) 
     {
         $user = User::create([
