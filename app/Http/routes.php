@@ -45,6 +45,11 @@ Route::group([
             'prefix' => 'channel'
         ], function () {
             
+            Route::get('/all', 'ChannelController@all');
+            Route::get('/find/{id}', 'ChannelController@find');
+            Route::post('/save', 'ChannelController@save');
+            Route::post('/edit', 'ChannelController@edit');
+            
         });
 
         Route::group([

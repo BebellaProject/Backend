@@ -37,6 +37,16 @@ Bebella.factory('Category', [
 ]);
 
 
+Bebella.factory('Channel', [
+    function () {
+        var Channel = new Function();
+        
+        return Channel;
+    }
+]);
+
+
+
 Bebella.factory('Product', [
     function () {
         var Product = new Function();
@@ -72,6 +82,26 @@ Bebella.service('CurrentCategory', ['Category',
         
     }
 ]);
+
+
+Bebella.service('CurrentChannel', ['Channel',
+    function (Channel) {
+        var service = this;
+        
+        var _channel = new Channel();
+        
+        service.get = function () {
+            return _channel;
+        };
+        
+        service.clear = function () {
+            _channel = new Channel();
+        };
+        
+    }
+]);
+
+
 
 
 Bebella.service('CurrentProduct', ['Product',
@@ -176,6 +206,93 @@ Bebella.service('CategoryRepository', ['$http', '$q', 'Category',
         };
     }
 ]);
+
+
+
+Bebella.service('ChannelRepository', ['$http', '$q', 'Channel',
+    function ($http, $q, Channel) {
+        var repository = this;
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('channel/find/' + id)).then(
+                function (res) {
+                    var channel = new Channel();
+                    
+                    attr(channel, res.data);
+                    
+                    deferred.resolve(channel);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("channel/all")).then(
+                function (res) {
+                    var channels = _.map(res.data, function (json) {
+                        var channel = new Channel();
+                        
+                        attr(channel, json);
+                        
+                        return channel;
+                    });
+                    
+                    deferred.resolve(channels);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.edit = function (channel) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(channel);
+            
+            $http.post(api_v1("channel/edit"), data).then(
+                 function (res) {
+                     deferred.resolve(channel);
+                 },
+                 function (res) {
+                     deferred.reject(res);
+                 }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (channel) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(channel);
+            
+            $http.post(api_v1("channel/save"), data).then(
+                function (res) {
+                    channel.id = res.data.id;
+                    
+                    deferred.resolve(channel);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
+
 
 
 
@@ -365,9 +482,28 @@ Bebella.controller('ChannelListCtrl', ['$scope',
 ]);
 
 
-Bebella.controller('ChannelNewCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Channel New";
+Bebella.controller('ChannelNewCtrl', ['$scope', 'CurrentChannel', 'ChannelRepository',
+    function ($scope, CurrentChannel, ChannelRepository) {
+        
+        $scope.channel = CurrentChannel.get();
+        
+        $scope.create = function () {
+            ChannelRepository.save($scope.channel).then(
+                function onSuccess (channel) {
+                    alert(channel.id);
+                    alert("Canal cadastrado com sucesso.");
+                },
+                function onError (res) {
+                    alert("Houve um erro no cadasto deste canal.");
+                }
+            );
+        };
+        
+        $scope.clear = function () {
+            CurrentChannel.clear();
+            $scope.channel = CurrentChannel.get();
+        };
+        
     }
 ]);
 

@@ -15,7 +15,9 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->unsignedInteger('category_id')->nullable(false);
+            $table->enum('type', ['beauty', 'decoration', 'clothing'])->nullable(false);
+            
+            $table->unsignedInteger('channel_id')->nullable(false);
             
             $table->string('name')->nullable(false);
             $table->string('desc')->nullable(false);

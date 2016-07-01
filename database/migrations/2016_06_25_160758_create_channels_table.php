@@ -17,10 +17,15 @@ class CreateChannelsTable extends Migration
             
             $table->unsignedInteger('user_id')->nullable(false);
             
-            $table->string('title')->nullable(false);
-            $table->string('desc')->nullable(false);
+            $table->string('name')->nullable(false);
+            $table->string('short_desc')->nullable(true);
+            $table->text('desc')->nullable(true);
             
-            $table->string('photo')->nullable(true);
+            $table->string('image_path')->nullable(true);
+            
+            $table->string('youtube_user')->nullable(true);
+            $table->string('facebook_page')->nullable(true);
+            $table->string('website')->nullable(true);
             
             $table->boolean('active')->default(true);
             $table->timestamps();
