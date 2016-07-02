@@ -38,7 +38,7 @@ class ProductImageSaving
             $parts = explode('/', $mime_type);
             $ext = $parts[1]; 
             
-            $filename = "images/product/" . $event->product->id . "." . $ext;
+            $filename = "images/product/" . time() . "-" . $event->product->id . "." . $ext;
 
             Storage::put($filename, $image);
 

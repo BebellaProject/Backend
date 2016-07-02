@@ -34,7 +34,7 @@ class ChannelController extends Controller
             "type" => "channel",
             "name" => $request->user_name,
             "email" => $request->user_email,
-            "password" => $request->user_password
+            "password" => bcrypt($request->user_password)
         ]);
         
         Event::fire(new UserWasCreated($user, $request));

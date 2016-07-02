@@ -17,10 +17,11 @@ class CreateRecipeStepsTable extends Migration
             
             $table->unsignedInteger('recipe_id')->nullable(false);
             
-            $table->string('name')->nullable(false);
             $table->string('desc')->nullable(false);
             
             $table->integer('order')->nullable(false);
+            
+            $table->string('image_path')->nullable(true);
             
             $table->boolean('active')->default(true);
             $table->timestamps();

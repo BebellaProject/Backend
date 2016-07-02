@@ -27,6 +27,14 @@ class EventServiceProvider extends ServiceProvider
         
         'Bebella\Events\Admin\ChannelWasCreated' => [
             'Bebella\Listeners\Admin\ChannelImageSaving',
+        ],
+        
+        'Bebella\Events\Admin\RecipeWasCreated' => [
+            'Bebella\Listeners\Admin\RecipeImageSaving',
+        ],
+        
+        'Bebella\Events\Admin\RecipeStepWasCreated' => [
+            'Bebella\Listeners\Admin\RecipeStepImageSaving',
         ]
     ];
 

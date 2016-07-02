@@ -57,6 +57,23 @@ Bebella.factory('Product', [
 
 
 
+Bebella.factory('Recipe', [
+    function () {
+        var Recipe = function () {
+            this.tags = new Array();
+            this.steps = new Array();
+            this.products = new Array();
+            this.comments = new Array();
+            this.related = new Array();
+        };
+        
+        return Recipe;
+    }
+]);
+
+
+
+
 Bebella.factory('User', [
     function () {
         var User = new Function();
@@ -120,6 +137,26 @@ Bebella.service('CurrentProduct', ['Product',
         
     }
 ]);
+
+
+
+Bebella.service('CurrentRecipe', ['Recipe',
+    function (Recipe) {
+        var service = this;
+        
+        var _recipe = new Recipe();
+        
+        service.get = function () {
+            return _recipe;
+        };
+        
+        service.clear = function () {
+            _recipe = new Recipe();
+        };
+        
+    }
+]);
+
 
 
 
@@ -383,6 +420,94 @@ Bebella.service('ProductRepository', ['$http', '$q', 'Product',
 
 
 
+Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
+    function ($http, $q, Recipe) {
+        var repository = this;
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('recipe/find/' + id)).then(
+                function (res) {
+                    var recipe = new Recipe();
+                    
+                    attr(recipe, res.data);
+                    
+                    deferred.resolve(recipe);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("recipe/all")).then(
+                function (res) {
+                    var recipes = _.map(res.data, function (json) {
+                        var recipe = new Recipe();
+                        
+                        attr(recipe, json);
+                        
+                        return recipe;
+                    });
+                    
+                    deferred.resolve(recipes);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.edit = function (recipe) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(recipe);
+            
+            $http.post(api_v1("recipe/edit"), data).then(
+                 function (res) {
+                     deferred.resolve(recipe);
+                 },
+                 function (res) {
+                     deferred.reject(res);
+                 }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (recipe) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(recipe);
+            
+            $http.post(api_v1("recipe/save"), data).then(
+                function (res) {
+                    recipe.id = res.data.id;
+                    
+                    deferred.resolve(recipe);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
+
+
+
+
+
 Bebella.service('UserRepository', ['$http', '$q', 'User',
     function ($http, $q, User) {
         var repository = this;
@@ -622,16 +747,86 @@ Bebella.controller('ProductNewCtrl', ['$scope', 'CurrentProduct', 'CategoryRepos
 
 
 
-Bebella.controller('RecipeListCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Recipe List";
+Bebella.controller('RecipeListCtrl', ['$scope', 'RecipeRepository',
+    function ($scope, RecipeRepository) {
+        
+        RecipeRepository.all().then(
+            function onSuccess (list) {
+                $scope.recipes = list;
+            },
+            function onError (res) {
+                alert("Erro ao carregar lista de receitas");
+            } 
+        );
+        
     }
 ]);
 
 
-Bebella.controller('RecipeNewCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Recipe New";
+Bebella.controller('RecipeNewCtrl', ['$scope', 'ChannelRepository', 'RecipeRepository', 'ProductRepository', 'CurrentRecipe',
+    function ($scope, ChannelRepository, RecipeRepository, ProductRepository, CurrentRecipe) {
+        
+        $scope.recipe = CurrentRecipe.get();
+        
+        ChannelRepository.all().then(
+            function onSuccess (list) {
+                $scope.channels = list;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção da lista de canais");
+            }
+        );
+        
+        ProductRepository.all().then(
+            function onSuccess (list) {
+                $scope.products = list;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção da lista de produtos");
+            }
+        );
+        
+        
+        $scope.create = function () {
+            RecipeRepository.save($scope.recipe).then(
+                function (recipe) {
+                    alert(recipe.id);
+                    alert("Nova receita criada com sucesso.");
+                },
+                function (res) {
+                    alert("Houve um erro na criação desta receita.");
+                }
+            );
+        };
+        
+        $scope.clear = function () {
+            CurrentRecipe.clear();
+            $scope.recipe = CurrentRecipe.get();
+        };
+        
+        $scope.newTag = function () {
+            $scope.recipe.tags.push({});
+        };
+        
+        $scope.removeTag = function () {
+            $scope.recipe.tags.pop();
+        };
+        
+        $scope.newStep = function () {
+            $scope.recipe.steps.push({});
+        };
+        
+        $scope.removeStep = function () {
+            $scope.recipe.steps.pop();
+        };
+        
+        $scope.newProduct = function () {
+            $scope.recipe.products.push({});
+        };
+        
+        $scope.removeProduct = function () {
+            $scope.recipe.products.pop();
+        };
     }
 ]);
 

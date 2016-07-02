@@ -22,6 +22,8 @@ class CreateRecipesTable extends Migration
             $table->string('name')->nullable(false);
             $table->string('desc')->nullable(false);
             
+            $table->string('image_path')->nullable(true);
+            
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

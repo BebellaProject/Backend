@@ -38,7 +38,7 @@ class CategoryImageSaving
             $parts = explode('/', $mime_type);
             $ext = $parts[1]; 
             
-            $filename = "images/category/" . $event->category->id . "." . $ext;
+            $filename = "images/category/" . time() . "-" . $event->category->id . "." . $ext;
 
             Storage::put($filename, $image);
 

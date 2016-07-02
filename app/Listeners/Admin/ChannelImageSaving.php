@@ -38,7 +38,7 @@ class ChannelImageSaving
             $parts = explode('/', $mime_type);
             $ext = $parts[1]; 
             
-            $filename = "images/channel/" . $event->product->id . "." . $ext;
+            $filename = "images/channel/" . time() . "-" . $event->channel->id . "." . $ext;
 
             Storage::put($filename, $image);
 

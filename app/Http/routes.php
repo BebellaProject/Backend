@@ -83,7 +83,12 @@ Route::group([
         Route::group([
             'prefix' => 'recipe'
         ], function () {
-            
+        
+            Route::get('/all', 'RecipeController@all');
+            Route::get('/find/{id}', 'RecipeController@find');
+            Route::post('/save', 'RecipeController@save');
+            Route::post('/edit', 'RecipeController@edit');
+         
         });
         
     });

@@ -4,11 +4,11 @@ namespace Bebella\Listeners\Admin;
 
 use Storage;
 
-use Bebella\Events\Admin\UserWasCreated;
+use Bebella\Events\Admin\RecipeStepWasCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserImageSaving
+class RecipeStepImageSaving
 {
     /**
      * Create the event listener.
@@ -23,14 +23,14 @@ class UserImageSaving
     /**
      * Handle the event.
      *
-     * @param  UserWasCreated  $event
+     * @param  RecipeStepWasCreated  $event
      * @return void
      */
-    public function handle(UserWasCreated $event)
+    public function handle(RecipeStepWasCreated $event)
     {
-        if ($event->request->profile_image) 
+        if ($event->request["image"]) 
         {
-            $base64_str = substr($event->request->profile_image, strpos($event->request->profile_image, ",")+1);
+            $base64_str = substr($event->request["image"], strpos($event->request["image"], ",")+1);
             $image = base64_decode($base64_str);
             
             $f = finfo_open();
@@ -38,13 +38,12 @@ class UserImageSaving
             $parts = explode('/', $mime_type);
             $ext = $parts[1]; 
             
-            $filename = "images/user/" . time() . "-" . $event->user->id . "." . $ext;
+            $filename = "images/recipe/step/" . time() . "-" . $event->step->id . "." . $ext;
 
             Storage::put($filename, $image);
 
-            $event->user->image_path = "storage/" . $filename;
+            $event->step->image_path = "storage/" . $filename;
 
-            $event->user->save();    
-        }
-    }
+            $event->step->save();    
+        }}
 }
