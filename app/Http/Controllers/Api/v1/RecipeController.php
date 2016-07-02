@@ -19,6 +19,43 @@ use Bebella\Http\Controllers\Controller;
 
 class RecipeController extends Controller
 {
+    
+    public function find($id) 
+    {
+        $recipe = Recipe::where('recipes.id', $id)
+                        ->join('channels', function ($join) {
+                            $join->on('recipes.channel_id', '=', 'channels.id');
+                        })
+                        ->select(
+                            'recipes.*', 
+                            'channels.name as channel_name',
+                            'channels.image_path as channel_image'
+                        )
+                        ->first();
+        
+        $recipe["tags"] = RecipeTag::where('recipe_id', $id)
+                                   ->where('active', true)
+                                   ->get();
+        
+        $recipe["steps"] = RecipeStep::where('recipe_id', $id)
+                                     ->where('active', true)
+                                     ->get();
+        
+        $recipe["products"] = RecipeProduct::where('recipe_products.recipe_id', $id)
+                                           ->where('recipe_products.active', true)
+                                           ->join('products', function ($join) {
+                                               $join->on('recipe_products.product_id', '=', 'products.id');
+                                           })
+                                           ->select(
+                                               'recipe_products.*',
+                                               'products.name as product_name',
+                                               'products.short_desc as product_desc',
+                                               'products.image_path as product_image'
+                                           )
+                                           ->get();
+                        
+        return $recipe;
+    }
  
     public function all() 
     {
@@ -26,7 +63,7 @@ class RecipeController extends Controller
                      ->join('channels', function ($join) {
                          $join->on('recipes.channel_id', '=', 'channels.id');
                      })
-                     ->select('recipes.*', 'channels.name as channel_name')
+                     ->select('recipes.*', 'channels.name as channel_name', 'channels.image_path as channel_image')
                      ->get();
     }
     
