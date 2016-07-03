@@ -12,7 +12,7 @@ class RecipeViewAndLikeColumns extends Migration
      */
     public function up()
     {
-        Schema::table('Recipes', function (Blueprint $table) {
+        Schema::table('recipes', function (Blueprint $table) {
             $table->unsignedInteger('view_count')->default(0);
             $table->unsignedInteger('like_count')->default(0);
         });
@@ -25,7 +25,7 @@ class RecipeViewAndLikeColumns extends Migration
      */
     public function down()
     {
-        Schema::table('Recipes', function (Blueprint $table) {
+        Schema::table('recipes', function (Blueprint $table) {
             $table->dropColumn('view_count');
             $table->dropColumn('like_count');
         });
