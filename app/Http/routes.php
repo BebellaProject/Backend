@@ -5,6 +5,21 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
 header('Access-Control-Allow-Credentials: true');
 
+Route::get('/fix', function () {
+    foreach (Bebella\User::get() as $user) 
+    {
+        $user->api_token = str_random(120);
+        
+        $user->save();
+    }
+    
+    return 1;
+});
+
+Route::get('/ping', function () {
+    return "Pong!";
+});
+
 Route::group([
     'namespace' => 'Auth',
     'prefix' => 'auth',
@@ -13,6 +28,8 @@ Route::group([
     
     Route::get('/login', 'AuthController@getLogin');
     Route::post('/login', 'AuthController@postlogin');
+   
+    Route::post('/api_login', 'AuthController@postApiLogin');
     
 });
 
@@ -23,6 +40,7 @@ Route::group([
 ], function () {
     
     Route::get('/logout', 'AuthController@getLogout');
+    Route::get('/user', 'AuthController@getUser');
     
 });
 
@@ -32,7 +50,8 @@ Route::get('/', function () {
 
 Route::group([
     'namespace' => 'Api',
-    'prefix' => 'api'
+    'prefix' => 'api',
+    'middleware' => 'auth:api'
 ], function () {
     
     Route::group([

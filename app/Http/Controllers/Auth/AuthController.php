@@ -4,6 +4,8 @@ namespace Bebella\Http\Controllers\Auth;
 
 use Auth;
 
+use Illuminate\Http\Request;
+
 use Bebella\User;
 use Validator;
 use Bebella\Http\Controllers\Controller;
@@ -69,6 +71,28 @@ class AuthController extends Controller
         Auth::logout();
         
         return redirect()->to('auth/login');
+    }
+    
+    public function getUser() 
+    {
+        return Auth::user();
+    }
+    
+    public function postApiLogin(Request $request) 
+    {
+        if (Auth::attempt([
+            "email" => $request->email,
+            "password" => $request->password
+        ])) 
+        {
+            $user = Auth::user();
+            
+            Auth::logout();
+            
+            return $user;
+        }
+        
+        return response()->json("Error", 500);
     }
     
     public function redirectPath() 
