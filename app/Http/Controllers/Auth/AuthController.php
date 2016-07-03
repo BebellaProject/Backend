@@ -26,13 +26,6 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
-
-    /**
      * Create a new authentication controller instance.
      *
      * @return void
@@ -76,5 +69,32 @@ class AuthController extends Controller
         Auth::logout();
         
         return redirect()->to('auth/login');
+    }
+    
+    public function redirectPath() 
+    {
+        $user = Auth::user();
+        
+        if ($user->type == "admin") 
+        {
+            return "/admin";
+        }
+        
+        if ($user->type == "user") 
+        {
+            return "/user";
+        }
+        
+        if ($user->type == "channel") 
+        {
+            return "/channel";
+        }
+        
+        if ($user->type == "store") 
+        {
+            return "/store";
+        }
+        
+        return "/";
     }
 }

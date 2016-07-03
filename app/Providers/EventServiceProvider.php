@@ -33,6 +33,10 @@ class EventServiceProvider extends ServiceProvider
             'Bebella\Listeners\Admin\RecipeImageSaving',
         ],
         
+        'Bebella\Events\Mobile\RecipeWasViewed' => [
+            'Bebella\Listeners\Mobile\RecipeViewCountUpdating',
+        ],
+        
         'Bebella\Events\Admin\RecipeStepWasCreated' => [
             'Bebella\Listeners\Admin\RecipeStepImageSaving',
         ]

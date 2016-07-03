@@ -90,6 +90,7 @@ Route::group([
         ], function () {
         
             Route::get('/all', 'RecipeController@all');
+            Route::get('/trending', 'RecipeController@trending');
             Route::get('/find/{id}', 'RecipeController@find');
             Route::post('/save', 'RecipeController@save');
             Route::post('/edit', 'RecipeController@edit');

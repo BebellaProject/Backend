@@ -13,6 +13,7 @@ use Bebella\RecipeProduct;
 
 use Bebella\Events\Admin\RecipeWasCreated;
 use Bebella\Events\Admin\RecipeStepWasCreated;
+use Bebella\Events\Mobile\RecipeWasViewed;
 
 use Bebella\Http\Requests;
 use Bebella\Http\Controllers\Controller;
@@ -33,6 +34,8 @@ class RecipeController extends Controller
                         )
                         ->first();
         
+        Event::fire(new RecipeWasViewed($recipe));                
+                        
         $recipe["tags"] = RecipeTag::where('recipe_id', $id)
                                    ->where('active', true)
                                    ->get();
@@ -53,7 +56,7 @@ class RecipeController extends Controller
                                                'products.image_path as product_image'
                                            )
                                            ->get();
-                        
+                                           
         return $recipe;
     }
  
@@ -64,6 +67,17 @@ class RecipeController extends Controller
                          $join->on('recipes.channel_id', '=', 'channels.id');
                      })
                      ->select('recipes.*', 'channels.name as channel_name', 'channels.image_path as channel_image')
+                     ->get();
+    }
+    
+    public function trending() 
+    {
+        return Recipe::where('recipes.active', true)
+                     ->join('channels', function ($join) {
+                         $join->on('recipes.channel_id', '=', 'channels.id');
+                     })
+                     ->select('recipes.*', 'channels.name as channel_name', 'channels.image_path as channel_image')
+                     ->orderBy('recipes.view_count', 'desc')
                      ->get();
     }
     

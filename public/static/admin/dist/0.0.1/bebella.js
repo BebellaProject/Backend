@@ -15,7 +15,7 @@ function attr(dest, src) {
         if (e == "created_at" || e == "updated_at") {
             dest[e] = new Date(src[e]);
         } else if (e.startsWith("has_") || e.startsWith("is_") || e.startsWith("used_for_") || e == "active") {
-            dest[e] = (src[e] === 1);
+            dest[e] = (src[e] == 1);
         } else {
             dest[e] = src[e];
         }
