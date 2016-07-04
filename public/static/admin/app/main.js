@@ -1,13 +1,14 @@
-var Bebella = angular.module('Bebella', ['ui.router', 'datatables']);
+var Bebella = angular.module('Bebella', ['ui.router', 'datatables', 'ngStorage']);
 
 var APP_URL = $("#APP_URL").val();
+var API_TOKEN = $("#API_TOKEN").val();
 
 function view(path) {
     return APP_URL + '/admin/' + path;
 }
 
-function api_v1(path) {
-    return APP_URL + '/api/v1/' + path;
+function api_v1(path, token) {
+    return APP_URL + '/api/v1/' + path + '?api_token=' + API_TOKEN;
 }
 
 function attr(dest, src) {
@@ -24,6 +25,5 @@ function attr(dest, src) {
 
 Bebella.run([
     function () {
-        
     }
 ]);

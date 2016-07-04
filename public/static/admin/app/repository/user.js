@@ -2,12 +2,16 @@ Bebella.service('UserRepository', ['$http', '$q', 'User',
     function ($http, $q, User) {
         var repository = this;
         
-        repository.all = function () {
+        repository.auth = function () {
             var deferred = $q.defer();
             
-            $http.get(api_v1("user/all")).then(
+            $http.get(APP_URL + '/auth/user').then(
                 function (res) {
+                    var user = new User();
                     
+                    attr(user, res.data);
+                    
+                    deferred.resolve(user);
                 },
                 function (res) {
                     deferred.reject(res);

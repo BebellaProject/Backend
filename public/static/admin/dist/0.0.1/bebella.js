@@ -1,13 +1,14 @@
-var Bebella = angular.module('Bebella', ['ui.router', 'datatables']);
+var Bebella = angular.module('Bebella', ['ui.router', 'datatables', 'ngStorage']);
 
 var APP_URL = $("#APP_URL").val();
+var API_TOKEN = $("#API_TOKEN").val();
 
 function view(path) {
     return APP_URL + '/admin/' + path;
 }
 
-function api_v1(path) {
-    return APP_URL + '/api/v1/' + path;
+function api_v1(path, token) {
+    return APP_URL + '/api/v1/' + path + '?api_token=' + API_TOKEN;
 }
 
 function attr(dest, src) {
@@ -24,7 +25,6 @@ function attr(dest, src) {
 
 Bebella.run([
     function () {
-        
     }
 ]);
 
@@ -244,8 +244,6 @@ Bebella.service('CategoryRepository', ['$http', '$q', 'Category',
     }
 ]);
 
-
-
 Bebella.service('ChannelRepository', ['$http', '$q', 'Channel',
     function ($http, $q, Channel) {
         var repository = this;
@@ -330,9 +328,6 @@ Bebella.service('ChannelRepository', ['$http', '$q', 'Channel',
     }
 ]);
 
-
-
-
 Bebella.service('ProductRepository', ['$http', '$q', 'Product',
     function ($http, $q, Product) {
         var repository = this;
@@ -416,9 +411,6 @@ Bebella.service('ProductRepository', ['$http', '$q', 'Product',
         };
     }
 ]);
-
-
-
 
 Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
     function ($http, $q, Recipe) {
@@ -507,17 +499,20 @@ Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
 
 
 
-
 Bebella.service('UserRepository', ['$http', '$q', 'User',
     function ($http, $q, User) {
         var repository = this;
         
-        repository.all = function () {
+        repository.auth = function () {
             var deferred = $q.defer();
             
-            $http.get(api_v1("user/all")).then(
+            $http.get(APP_URL + '/auth/user').then(
                 function (res) {
+                    var user = new User();
                     
+                    attr(user, res.data);
+                    
+                    deferred.resolve(user);
                 },
                 function (res) {
                     deferred.reject(res);

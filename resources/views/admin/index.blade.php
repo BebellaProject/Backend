@@ -42,7 +42,9 @@
             <div class="loader-section section-right"></div>
         </div>
 
-        <input type="hidden" id="APP_URL" value="<% $APP_URL %>" /> 
+        <input type="hidden" id="APP_URL" value="<% $APP_URL %>" />
+        <input type="hidden" id="API_TOKEN" value="<% $API_TOKEN %>" />
+        
 
         <header id="header" class="page-topbar">
             <div class="navbar-fixed">
@@ -429,6 +431,7 @@
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/ngstorage/ngStorage.min.js"></script>
 
         <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.1/bebella.js"></script>
 

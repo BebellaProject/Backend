@@ -81,4 +81,3 @@ Bebella.service('CategoryRepository', ['$http', '$q', 'Category',
         };
     }
 ]);
-

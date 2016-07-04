@@ -85,11 +85,7 @@ class AuthController extends Controller
             "password" => $request->password
         ])) 
         {
-            $user = Auth::user();
-            
-            Auth::logout();
-            
-            return $user;
+            return Auth::user();
         }
         
         return response()->json("Error", 500);

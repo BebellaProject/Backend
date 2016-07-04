@@ -7,5 +7,8 @@
     "angular-ui-router": "ui-router#^0.3.1",
     "underscore": "^1.8.3",
     "angular-datatables": "^0.5.4"
+  },
+  "devDependencies": {
+    "ngstorage": "^0.3.10"
   }
 }

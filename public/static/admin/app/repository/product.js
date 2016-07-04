@@ -81,5 +81,3 @@ Bebella.service('ProductRepository', ['$http', '$q', 'Product',
         };
     }
 ]);
-
-

@@ -81,5 +81,3 @@ Bebella.service('ChannelRepository', ['$http', '$q', 'Channel',
         };
     }
 ]);
-
-
