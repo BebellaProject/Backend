@@ -114,6 +114,8 @@ Route::group([
             Route::post('/save', 'RecipeController@save');
             Route::post('/edit', 'RecipeController@edit');
          
+            Route::post('/paginateWithFilters/{page}', 'RecipeController@paginateWithFilters');
+            
         });
         
     });
