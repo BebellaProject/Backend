@@ -21,6 +21,21 @@ Bebella.service('ProductOptionRepository', ['$http', '$q', 'ProductOption',
             return deferred.promise;
         };
         
+        repository.getStoreUrl = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('product_option/getStoreUrl/' + id)).then(
+                function (res) {
+                    deferred.resolve(res.data);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
         repository.all = function () {
             var deferred = $q.defer();
             

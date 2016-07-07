@@ -115,9 +115,9 @@ Route::group([
         ], function () {
             
             Route::get('/all', 'ProductOptionController@all');
-            Route::get('/find/{id}', 'ProductOptionController@find');
+            Route::get('/byProduct/{id}', 'ProductOptionController@byProduct');
+            Route::get('/getStoreUrl/{id}', 'ProductOptionController@getStoreUrl');
             Route::post('/save', 'ProductOptionController@save');
-            Route::post('/edit', 'ProductOptionController@edit');
             
         });
 
