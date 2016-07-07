@@ -16,8 +16,8 @@
                     <tbody>
                         <tr ng-repeat="recipe in recipes">
                             <td>{{ recipe.id }}</td>
-                            <td>{{ recipe.name }}</td>
-                            <td>{{ recipe.channel_name }}</td>
+                            <td><a ui-sref="recipe_detail({recipeId: {{recipe.id}}})">{{ recipe.name }}</a></td>
+                            <td><a ui-sref="channel_detail({channel_id: {{ recipe.channel_id }}})">{{ recipe.channel_name }}</a></td>
                             <td>{{ recipe.active ? "Sim" : "Não" }}</td>
                             <td>{{ recipe.created_at | date:"dd/MM/yyyy" }}</td>
                         </tr>

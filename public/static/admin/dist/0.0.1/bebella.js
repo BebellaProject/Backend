@@ -57,6 +57,17 @@ Bebella.factory('Product', [
 
 
 
+Bebella.factory('ProductOption', [
+    function () {
+        var ProductOption = new Function();
+        
+        return ProductOption;
+    }
+]);
+
+
+
+
 Bebella.factory('Recipe', [
     function () {
         var Recipe = function () {
@@ -68,6 +79,17 @@ Bebella.factory('Recipe', [
         };
         
         return Recipe;
+    }
+]);
+
+
+
+
+Bebella.factory('Store', [
+    function () {
+        var Store = new Function();
+        
+        return Store;
     }
 ]);
 
@@ -140,6 +162,26 @@ Bebella.service('CurrentProduct', ['Product',
 
 
 
+Bebella.service('CurrentProductOption', ['ProductOption',
+    function (ProductOption) {
+        var service = this;
+        
+        var _product_option = new ProductOption();
+        
+        service.get = function () {
+            return _product_option;
+        };
+        
+        service.clear = function () {
+            _product_option = new ProductOption();
+        };
+        
+    }
+]);
+
+
+
+
 Bebella.service('CurrentRecipe', ['Recipe',
     function (Recipe) {
         var service = this;
@@ -152,6 +194,26 @@ Bebella.service('CurrentRecipe', ['Recipe',
         
         service.clear = function () {
             _recipe = new Recipe();
+        };
+        
+    }
+]);
+
+
+
+
+Bebella.service('CurrentStore', ['Store',
+    function (Store) {
+        var service = this;
+        
+        var _store = new Store();
+        
+        service.get = function () {
+            return _store;
+        };
+        
+        service.clear = function () {
+            _store = new Store();
         };
         
     }
@@ -412,6 +474,91 @@ Bebella.service('ProductRepository', ['$http', '$q', 'Product',
     }
 ]);
 
+Bebella.service('ProductOptionRepository', ['$http', '$q', 'ProductOption',
+    function ($http, $q, ProductOption) {
+        var repository = this;
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('product_option/find/' + id)).then(
+                function (res) {
+                    var product_option = new ProductOption();
+                    
+                    attr(product_option, res.data);
+                    
+                    deferred.resolve(product_option);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("product_option/all")).then(
+                function (res) {
+                    var product_options = _.map(res.data, function (json) {
+                        var product_option = new ProductOption();
+                        
+                        attr(product_option, json);
+                        
+                        return product_option;
+                    });
+                    
+                    deferred.resolve(product_options);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.edit = function (product_option) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(product_option);
+            
+            $http.post(api_v1("product_option/edit"), data).then(
+                 function (res) {
+                     deferred.resolve(product_option);
+                 },
+                 function (res) {
+                     deferred.reject(res);
+                 }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (product_option) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(product_option);
+            
+            $http.post(api_v1("product_option/save"), data).then(
+                function (res) {
+                    product_option.id = res.data.id;
+                    
+                    deferred.resolve(product_option);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
+
+
 Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
     function ($http, $q, Recipe) {
         var repository = this;
@@ -497,6 +644,91 @@ Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
 ]);
 
 
+
+
+Bebella.service('StoreRepository', ['$http', '$q', 'Store',
+    function ($http, $q, Store) {
+        var repository = this;
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('store/find/' + id)).then(
+                function (res) {
+                    var store = new Store();
+                    
+                    attr(store, res.data);
+                    
+                    deferred.resolve(store);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("store/all")).then(
+                function (res) {
+                    var stores = _.map(res.data, function (json) {
+                        var store = new Store();
+                        
+                        attr(store, json);
+                        
+                        return store;
+                    });
+                    
+                    deferred.resolve(stores);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.edit = function (store) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(store);
+            
+            $http.post(api_v1("store/edit"), data).then(
+                 function (res) {
+                     deferred.resolve(store);
+                 },
+                 function (res) {
+                     deferred.reject(res);
+                 }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (store) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(store);
+            
+            $http.post(api_v1("store/save"), data).then(
+                function (res) {
+                    store.id = res.data.id;
+                    
+                    deferred.resolve(store);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
 
 
 Bebella.service('UserRepository', ['$http', '$q', 'User',
@@ -638,16 +870,64 @@ Bebella.controller('ChannelNewCtrl', ['$scope', 'CurrentChannel', 'ChannelReposi
 
 
 
-Bebella.controller('ProductOptionListCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Product Option List";
+Bebella.controller('ProductOptionListCtrl', ['$scope', 'ProductOptionRepository',
+    function ($scope, ProductOptionRepository) {
+        
+        ProductOptionRepository.all().then(
+            function onSuccess (list) {
+                $scope.product_options = list;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção da lista de opções de produto.");
+            }
+        );
+        
     }
 ]);
 
 
-Bebella.controller('ProductOptionNewCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Product Option New";
+Bebella.controller('ProductOptionNewCtrl', ['$scope', 'StoreRepository', 'ProductRepository', 'ProductOptionRepository', 'CurrentProductOption',
+    function ($scope, StoreRepository, ProductRepository, ProductOptionRepository, CurrentProductOption) {
+    
+        $scope.product_option = CurrentProductOption.get();
+    
+        StoreRepository.all().then(
+            function onSuccess (list) {
+                $scope.stores = list;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção da lista de lojas");
+            }
+        );
+
+        ProductRepository.all().then(
+            function onSuccess (list) {
+                $scope.products = list;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção da lista de lojas");
+            }
+        );
+    
+        $scope.create = function () {
+            ProductOptionRepository.save($scope.product_option).then(
+                function onSuccess (product_option) {
+                    alert(product_option.id);
+                    alert("Opção de produto cadastrada com sucesso");
+                },
+                function onError (res) {
+                    alert("Erro ao cadastrar opção de produto.");
+                }
+            );
+        };
+    
+    
+        $scope.clear = function () {
+            CurrentProductOption.clear();
+            
+            $scope.product_option = CurrentProductOption.get();
+        };
+    
     }
 ]);
 
@@ -827,16 +1107,44 @@ Bebella.controller('RecipeNewCtrl', ['$scope', 'ChannelRepository', 'RecipeRepos
 
 
 
-Bebella.controller('StoreListCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Store List";
+Bebella.controller('StoreListCtrl', ['$scope', 'StoreRepository',
+    function ($scope, StoreRepository) {
+    
+        StoreRepository.all().then(
+            function onSuccess (list) {
+                $scope.stores = list;
+            },
+            function onError (res) {
+                alert("Erro ao obter a lista de lojas.");
+            }
+        );
+    
     }
 ]);
 
 
-Bebella.controller('StoreNewCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "Store New";
+Bebella.controller('StoreNewCtrl', ['$scope', 'CurrentStore', 'StoreRepository',
+    function ($scope, CurrentStore, StoreRepository) {
+        
+        $scope.store = CurrentStore.get();
+        
+        $scope.create = function () {
+            StoreRepository.save($scope.store).then(
+                function onSuccess (store) {
+                    alert(store.id);
+                    alert("Loja cadastrada com sucesso");
+                },
+                function onError (res) {
+                    alert("Houve um erro ao cadastrar a loja.");
+                }
+            );
+        };
+        
+        $scope.clear = function () {
+            CurrentStore.clear();
+            $scope.store = CurrentStore.get();
+        };
+        
     }
 ]);
 

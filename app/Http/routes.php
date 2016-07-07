@@ -64,6 +64,18 @@ Route::group([
         ], function () {
             
         });
+
+        Route::group([
+            'prefix' => 'store'
+        ], function () {
+            
+            Route::get('/all', 'StoreController@all');
+            Route::get('/find/{id}', 'StoreController@find');
+            Route::post('/save', 'StoreController@save');
+            Route::post('/edit', 'StoreController@edit');
+            
+        });
+
         
         Route::group([
             'prefix' => 'channel'
@@ -99,8 +111,13 @@ Route::group([
         });
 
         Route::group([
-            'prefix' => 'productOption'
+            'prefix' => 'product_option'
         ], function () {
+            
+            Route::get('/all', 'ProductOptionController@all');
+            Route::get('/find/{id}', 'ProductOptionController@find');
+            Route::post('/save', 'ProductOptionController@save');
+            Route::post('/edit', 'ProductOptionController@edit');
             
         });
 

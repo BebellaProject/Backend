@@ -21,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
             'Bebella\Listeners\Admin\ProductImageSaving',
         ],
         
+        'Bebella\Events\Admin\ProductOptionWasCreated' => [
+            'Bebella\Listeners\Admin\ProductOptionImageSaving',
+        ],
+        
         'Bebella\Events\Admin\UserWasCreated' => [
             'Bebella\Listeners\Admin\UserImageSaving',
         ],
@@ -31,6 +35,10 @@ class EventServiceProvider extends ServiceProvider
         
         'Bebella\Events\Admin\RecipeWasCreated' => [
             'Bebella\Listeners\Admin\RecipeImageSaving',
+        ],
+        
+        'Bebella\Events\Admin\StoreWasCreated' => [
+            'Bebella\Listeners\Admin\StoreImageSaving',
         ],
         
         'Bebella\Events\Mobile\RecipeWasViewed' => [
