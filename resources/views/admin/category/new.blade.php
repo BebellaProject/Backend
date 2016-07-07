@@ -1,8 +1,5 @@
 <div class="section" ng-controller="CategoryNewCtrl">
 
-    <p class="caption">Formulário para cadastro de novas categorias</p>
-    <div class="divider"></div>
-
     <!--Input fields-->
     <div id="input-fields">
         <h4 class="header">Informações Gerais</h4>

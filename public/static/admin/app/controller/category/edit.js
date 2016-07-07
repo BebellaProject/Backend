@@ -1,5 +1,12 @@
-Bebella.controller('CategoryEditCtrl', ['$scope', '$stateParams', 'CategoryRepository',
-    function ($scope, $stateParams, CategoryRepository) {
+Bebella.controller('CategoryEditCtrl', ['$scope', 'Breadcumb', '$stateParams', 'CategoryRepository',
+    function ($scope, Breadcumb, $stateParams, CategoryRepository) {
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {url: 'category_detail({categoryId: ' + $stateParams.categoryId + '})', text: 'Categoria'},
+            {text: 'Formulário de Cadastro'}
+        ];
+        
     
         $scope.edit = function () {
             CategoryRepository.edit($scope.category).then(
@@ -15,6 +22,8 @@ Bebella.controller('CategoryEditCtrl', ['$scope', '$stateParams', 'CategoryRepos
         CategoryRepository.find($stateParams.categoryId).then(
             function onSuccess (category) {
                 $scope.category = category;
+                
+                Breadcumb.title = category.name;
             },
             function onError (res) {
                 alert("Houve um erro na obtenção dos dados desta categoria");

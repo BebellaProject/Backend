@@ -1,5 +1,13 @@
-Bebella.controller('CategoryNewCtrl', ['$scope', 'CurrentCategory', 'CategoryRepository',
-    function ($scope, CurrentCategory, CategoryRepository) {
+Bebella.controller('CategoryNewCtrl', ['$scope', 'CurrentCategory', 'CategoryRepository', 'Breadcumb',
+    function ($scope, CurrentCategory, CategoryRepository, Breadcumb) {
+        
+        Breadcumb.title = 'Nova Categoria';
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {text: 'Formulário de Cadastro'}
+        ];
+        
         $scope.category = CurrentCategory.get();
     
         $scope.create = function () {

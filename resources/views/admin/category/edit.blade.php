@@ -1,8 +1,5 @@
 <div class="section" ng-controller="CategoryEditCtrl">
 
-    <p class="caption">Formulário de cadastro</p>
-    <div class="divider"></div>
-
     <!--Input fields-->
     <div id="input-fields">
         <h4 class="header">Informações Gerais</h4>
@@ -34,7 +31,7 @@
     <div id="submit-button" class="section">
         <div class="row">
             <div class="col s12 m12 l12 right-align">
-                <button class="btn waves-effect waves-light green" type="button" ng-click="edit()" name="action">Editar
+                <button class="btn waves-effect waves-light bebella-color-2" type="button" ng-click="edit()" name="action">Editar
                     <i class="mdi-content-send right"></i>
                 </button>
             </div>

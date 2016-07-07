@@ -1,5 +1,12 @@
-Bebella.controller('CategoryListCtrl', ['$scope', 'CategoryRepository',
-    function ($scope, CategoryRepository) {
+Bebella.controller('CategoryListCtrl', ['$scope', 'CategoryRepository', 'Breadcumb',
+    function ($scope, CategoryRepository, Breadcumb) {
+        
+        Breadcumb.title = 'Categorias';
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {text: 'Lista'}
+        ];
         
         CategoryRepository.all().then(
             function onSuccess (list) {

@@ -105,6 +105,17 @@ Bebella.factory('User', [
 ]);
 
 
+Bebella.service('Breadcumb', [
+    function () {
+        var service = this;
+        
+        service.title = "Teste";
+        
+        service.items = [];
+    }
+]);
+
+
 Bebella.service('CurrentCategory', ['Category',
     function (Category) {
         var service = this;
@@ -497,6 +508,21 @@ Bebella.service('ProductOptionRepository', ['$http', '$q', 'ProductOption',
             return deferred.promise;
         };
         
+        repository.getStoreUrl = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('product_option/getStoreUrl/' + id)).then(
+                function (res) {
+                    deferred.resolve(res.data);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
         repository.all = function () {
             var deferred = $q.defer();
             
@@ -757,8 +783,22 @@ Bebella.service('UserRepository', ['$http', '$q', 'User',
 ]);
 
 
-Bebella.controller('CategoryEditCtrl', ['$scope', '$stateParams', 'CategoryRepository',
-    function ($scope, $stateParams, CategoryRepository) {
+Bebella.controller('BreadcumbCtrl', ['$scope', 'Breadcumb',
+    function ($scope, Breadcumb) {
+        $scope.breadcumb = Breadcumb;
+    }
+]);
+
+
+Bebella.controller('CategoryEditCtrl', ['$scope', 'Breadcumb', '$stateParams', 'CategoryRepository',
+    function ($scope, Breadcumb, $stateParams, CategoryRepository) {
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {url: 'category_detail({categoryId: ' + $stateParams.categoryId + '})', text: 'Categoria'},
+            {text: 'Formulário de Cadastro'}
+        ];
+        
     
         $scope.edit = function () {
             CategoryRepository.edit($scope.category).then(
@@ -774,6 +814,8 @@ Bebella.controller('CategoryEditCtrl', ['$scope', '$stateParams', 'CategoryRepos
         CategoryRepository.find($stateParams.categoryId).then(
             function onSuccess (category) {
                 $scope.category = category;
+                
+                Breadcumb.title = category.name;
             },
             function onError (res) {
                 alert("Houve um erro na obtenção dos dados desta categoria");
@@ -786,8 +828,15 @@ Bebella.controller('CategoryEditCtrl', ['$scope', '$stateParams', 'CategoryRepos
 
 
 
-Bebella.controller('CategoryListCtrl', ['$scope', 'CategoryRepository',
-    function ($scope, CategoryRepository) {
+Bebella.controller('CategoryListCtrl', ['$scope', 'CategoryRepository', 'Breadcumb',
+    function ($scope, CategoryRepository, Breadcumb) {
+        
+        Breadcumb.title = 'Categorias';
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {text: 'Lista'}
+        ];
         
         CategoryRepository.all().then(
             function onSuccess (list) {
@@ -802,8 +851,16 @@ Bebella.controller('CategoryListCtrl', ['$scope', 'CategoryRepository',
 ]);
 
 
-Bebella.controller('CategoryNewCtrl', ['$scope', 'CurrentCategory', 'CategoryRepository',
-    function ($scope, CurrentCategory, CategoryRepository) {
+Bebella.controller('CategoryNewCtrl', ['$scope', 'CurrentCategory', 'CategoryRepository', 'Breadcumb',
+    function ($scope, CurrentCategory, CategoryRepository, Breadcumb) {
+        
+        Breadcumb.title = 'Nova Categoria';
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {text: 'Formulário de Cadastro'}
+        ];
+        
         $scope.category = CurrentCategory.get();
     
         $scope.create = function () {
