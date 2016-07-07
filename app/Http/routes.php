@@ -115,6 +115,7 @@ Route::group([
             Route::post('/edit', 'RecipeController@edit');
          
             Route::post('/paginateWithFilters/{page}', 'RecipeController@paginateWithFilters');
+            Route::post('/trendingWithFilters/{page}', 'RecipeController@trendingWithFilters');
             
         });
         

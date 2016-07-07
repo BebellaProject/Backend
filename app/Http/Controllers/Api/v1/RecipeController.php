@@ -87,6 +87,33 @@ class RecipeController extends Controller
         return $response;
     }
     
+    public function trendingWithFilters ($page, Request $request)
+    {
+        $filters = array();
+        $response = array();
+        
+        foreach ($request->all() as $key => $value) 
+        {
+            if ($value) array_push($filters, $key);
+        }
+        
+        $data = Recipe::where('recipes.active', true)
+                     ->whereIn('recipes.type', $filters)
+                     ->join('channels', function ($join) {
+                         $join->on('recipes.channel_id', '=', 'channels.id');
+                     })
+                     ->select('recipes.*', 'channels.name as channel_name', 'channels.image_path as channel_image')
+                     ->orderBy('recipes.view_count', 'desc')
+                     ->take($page * 5)
+                     ->skip(($page - 1) * 5)
+                     ->get();
+        
+        $response["data"] = $data;
+        $response["page"] = $page;
+        
+        return $response;
+    }
+    
     public function all() 
     {
         return Recipe::where('recipes.active', true)
