@@ -3,10 +3,14 @@
 namespace Bebella\Http\Controllers\Api\v1;
 
 use Event;
+use Auth;
 
+use Bebella\Recipe;
 use Bebella\ProductOption;
 
 use Bebella\Events\Admin\ProductOptionWasCreated;
+use Bebella\Events\Mobile\RedirectionToProductOptionUrl;
+use Bebella\Events\Mobile\ProductOptionWasViewed;
 
 use Illuminate\Http\Request;
 
@@ -15,9 +19,13 @@ use Bebella\Http\Controllers\Controller;
 
 class ProductOptionController extends Controller
 {
-    public function getStoreUrl($id) 
+    public function getStoreUrl($id, Request $request) 
     {
+        $user = Auth::guard('api')->user();
         $productOption = ProductOption::find($id);
+        $recipe = Recipe::find($request->recipe_id);
+        
+        Event::fire(new RedirectionToProductOptionUrl($user, $recipe, $productOption));
         
         return $productOption->store_url;
     }
@@ -47,9 +55,11 @@ class ProductOptionController extends Controller
                             )->get();
     }
     
-    public function byProduct($id) 
+    public function byProduct($id, Request $request) 
     {
-        return ProductOption::where('product_options.active', true)
+        $user = Auth::guard('api')->user();
+        $recipe = Recipe::find($request->recipe_id);
+        $options = ProductOption::where('product_options.active', true)
                             ->where('product_options.product_id', $id)
                             ->join('products', function ($join) {
                                 $join->on('product_options.product_id' , '=', 'products.id');
@@ -63,6 +73,14 @@ class ProductOptionController extends Controller
                                 "stores.name as store_name",
                                 "stores.image_path as store_image"    
                             )->get();
+                            
+        
+        foreach ($options as $option) 
+        {
+            Event::fire(new ProductOptionWasViewed($user, $recipe, $option));
+        }
+        
+        return $options;
     }
     
 }

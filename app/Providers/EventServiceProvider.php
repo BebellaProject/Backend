@@ -41,13 +41,25 @@ class EventServiceProvider extends ServiceProvider
             'Bebella\Listeners\Admin\StoreImageSaving',
         ],
         
+        'Bebella\Events\Admin\RecipeStepWasCreated' => [
+            'Bebella\Listeners\Admin\RecipeStepImageSaving',
+        ],
+        
         'Bebella\Events\Mobile\RecipeWasViewed' => [
             'Bebella\Listeners\Mobile\RecipeViewCountUpdating',
         ],
         
-        'Bebella\Events\Admin\RecipeStepWasCreated' => [
-            'Bebella\Listeners\Admin\RecipeStepImageSaving',
-        ]
+        'Bebella\Events\Mobile\RedirectionToProductOptionUrl' => [
+            'Bebella\Listeners\Mobile\UserProductOptionRedirectionRegistration',
+        ],
+        
+        'Bebella\Events\Mobile\ProductOptionWasViewed' => [
+            'Bebella\Listeners\Mobile\ProductOptionVisualizationCounting',
+        ],
+        
+        'Bebella\Events\Mobile\ProductOptionWasClicked' => [
+            'Bebella\Listeners\Mobile\ProductOptionClickCounting',
+        ],
     ];
 
     /**
