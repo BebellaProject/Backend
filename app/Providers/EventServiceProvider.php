@@ -60,6 +60,10 @@ class EventServiceProvider extends ServiceProvider
         'Bebella\Events\Mobile\ProductOptionWasClicked' => [
             'Bebella\Listeners\Mobile\ProductOptionClickCounting',
         ],
+        
+        'Bebella\Events\Mobile\RecipeWasSearched' => [
+            'Bebella\Listeners\Mobile\RecipeSearchRegistering',
+        ],
     ];
 
     /**

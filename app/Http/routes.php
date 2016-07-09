@@ -78,6 +78,14 @@ Route::group([
             Route::post('/edit', 'StoreController@edit');
             
         });
+        
+        Route::group([
+            'prefix' => 'search'
+        ], function () {
+            
+            Route::post('/recipe', 'SearchController@searchRecipe');
+            
+        });
 
         
         Route::group([
