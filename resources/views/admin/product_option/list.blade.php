@@ -17,8 +17,8 @@
                     <tbody>
                         <tr ng-repeat="option in product_options">
                             <td>{{ option.id }}</td>
-                            <td>{{ option.name }}</td>
-                            <td><a ui-sref="product_edit({productId: {{ option.product_id}}})">{{ option.product_name}}</td>
+                            <td><a ui-sref="product_option_detail({productOptionId: {{ option.id }}})">{{ option.name }}</a></td>
+                            <td><a ui-sref="product_edit({productId: {{ option.product_id}}})">{{ option.product_name}}</a></td>
                             <td><a ui-sref="store_edit({storeId: {{ option.store_id}}})">{{ option.store_name}}</a></td>
                             <td>{{ option.active ? "Sim" : "Não" }}</td>
                             <td>{{ option.created_at | date:"dd/MM/yyyy" }}</td>

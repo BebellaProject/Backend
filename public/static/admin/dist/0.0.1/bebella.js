@@ -1,4 +1,4 @@
-var Bebella = angular.module('Bebella', ['ui.router', 'datatables', 'ngStorage']);
+var Bebella = angular.module('Bebella', ['ui.router', 'datatables', 'angular-flot']);
 
 var APP_URL = $("#APP_URL").val();
 var API_TOKEN = $("#API_TOKEN").val();
@@ -229,6 +229,27 @@ Bebella.service('CurrentStore', ['Store',
         
     }
 ]);
+
+
+
+
+Bebella.service('CurrentUser', ['User',
+    function (User) {
+        var service = this;
+        
+        var _user = new User();
+        
+        service.get = function () {
+            return _user;
+        };
+        
+        service.clear = function () {
+            _user = new User();
+        };
+        
+    }
+]);
+
 
 
 
@@ -672,6 +693,59 @@ Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
 
 
 
+Bebella.service('ReportRepository', ['$http', '$q',
+    function ($http, $q) {
+        var repository = this;
+        
+        repository.redirectsByProductOption = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("report/redirectsByProductOption/" + id)).then(
+                function (res) {
+                    deferred.resolve(res.data);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.clicksByProductOption = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("report/clicksByProductOption/" + id)).then(
+                function (res) {
+                    deferred.resolve(res.data);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.viewsByProductOption = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("report/viewsByProductOption/" + id)).then(
+                function (res) {
+                    deferred.resolve(res.data);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
+
+
+
 Bebella.service('StoreRepository', ['$http', '$q', 'Store',
     function ($http, $q, Store) {
         var repository = this;
@@ -771,6 +845,48 @@ Bebella.service('UserRepository', ['$http', '$q', 'User',
                     attr(user, res.data);
                     
                     deferred.resolve(user);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (user) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(user);
+            
+            $http.post(api_v1("user/save"), data).then(
+                function (res) {
+                    user.id = res.data.id;
+                    
+                    deferred.resolve(user);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("user/all")).then(
+                function (res) {
+                    var users = _.map(res.data, function (json) {
+                        var user = new User();
+                        
+                        attr(user, json);
+                        
+                        return user;
+                    });
+                    
+                    deferred.resolve(users);
                 },
                 function (res) {
                     deferred.reject(res);
@@ -925,6 +1041,105 @@ Bebella.controller('ChannelNewCtrl', ['$scope', 'CurrentChannel', 'ChannelReposi
     }
 ]);
 
+
+
+Bebella.controller('ProductOptionDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'ProductOptionRepository', 'ReportRepository',
+    function ($scope, $stateParams, Breadcumb, ProductOptionRepository, ReportRepository) {
+
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {url: 'product_option_list', text: 'Lista'},
+            {text: 'Opção de Produto'}
+        ];
+
+        $scope.redirectOptions = {
+            legend: {
+                show: true,
+                container: "#chart-legends1"
+            },
+            series: {
+                lines: {
+                    lineWidth: 1
+                }
+            },
+            xaxis: {
+                mode: "time",
+                timezone: "browser",
+                position: "bottom",
+                timeFormat: "%d/%m/%y"
+            }
+        };
+
+        $scope.viewClickOptions = {
+            legend: {
+                show: true,
+                container: "#chart-legends2"
+            },
+            series: {
+                lines: {
+                    lineWidth: 1
+                }
+            },
+            xaxis: {
+                mode: "time",
+                timezone: "browser",
+                position: "bottom",
+                timeFormat: "%d/%m/%y"
+            }
+        };
+
+        ProductOptionRepository.find($stateParams.productOptionId).then(
+                function onSuccess(productOption) {
+                    $scope.productOption = productOption;
+
+                    Breadcumb.title = productOption.name;
+                },
+                function onError(res) {
+                    alert("Houve um erro na obtenção da lista de produtos");
+                }
+        );
+
+        ReportRepository.redirectsByProductOption($stateParams.productOptionId).then(
+                function onSuccess(results) {
+                    $scope.redirectDataset = [
+                        {
+                            color: "blue",
+                            label: "visualizações",
+                            shadowSize: 0,
+                            data: _.map(results, function (e) {
+                                console.log(new Date(e.date), e.count);
+                                return [new Date(e.date), e.count];
+                            })
+                        }
+                    ];
+                },
+                function onError(res) {
+                    alert("Houve um erro na obtenção da lista de redirecionamentos");
+                }
+        );
+
+        ReportRepository.clicksByProductOption($stateParams.productOptionId).then(
+                function onSuccess(results) {
+
+                },
+                function onError(res) {
+                    alert("Houve um erro na obtenção da lista de cliques");
+                }
+        );
+
+        ReportRepository.viewsByProductOption($stateParams.productOptionId).then(
+                function onSuccess(results) {
+
+                },
+                function onError(res) {
+                    alert("Houve um erro na obtenção da lista de visualizações");
+                }
+        );
+
+
+
+    }
+]);
 
 
 Bebella.controller('ProductOptionListCtrl', ['$scope', 'ProductOptionRepository',
@@ -1207,16 +1422,57 @@ Bebella.controller('StoreNewCtrl', ['$scope', 'CurrentStore', 'StoreRepository',
 
 
 
-Bebella.controller('UserListCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "User List";
+Bebella.controller('UserListCtrl', ['$scope', 'UserRepository', 'Breadcumb',
+    function ($scope, UserRepository, Breadcumb) {
+        
+        Breadcumb.title = 'Usuários';
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {text: 'Lista'}
+        ];
+        
+        UserRepository.all().then(
+            function onSuccess (list) {
+                $scope.users = list;
+            },
+            function onError (res) {
+                alert("Erro ao obter lista de usuários");
+            }
+        );
+        
     }
 ]);
 
 
-Bebella.controller('UserNewCtrl', ['$scope',
-    function ($scope) {
-        $scope.test = "User New";
+Bebella.controller('UserNewCtrl', ['$scope', 'Breadcumb', 'CurrentUser', 'UserRepository',
+    function ($scope, Breadcumb, CurrentUser, UserRepository) {
+        
+        Breadcumb.title = 'Novo Usuário';
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {text: 'Formulário de Cadastro'}
+        ];
+        
+        $scope.user = CurrentUser.get();
+        
+        $scope.create = function () {
+            UserRepository.save($scope.user).then(
+                function onSuccess (user) {
+                    alert(user.id);
+                    alert("Novo Usuário criado com sucesso");
+                },
+                function onError (res) {
+                    alert("Erro ao criar novo usuário");
+                }
+            );
+        };
+        
+        $scope.clear = function () {
+            CurrentUser.clear();
+            $scope.user = CurrentUser.get();
+        };
     }
 ]);
 
@@ -1392,6 +1648,15 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                     views: {
                         MainContent: {
                             templateUrl: view('product_option/list')
+                        }
+                    }
+                })
+                
+                .state('product_option_detail', {
+                    url: '/product_option/{productOptionId}/detail',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('product_option/detail')
                         }
                     }
                 })

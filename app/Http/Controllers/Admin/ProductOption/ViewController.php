@@ -18,4 +18,10 @@ class ViewController extends Controller
     {
         return view('admin.product_option.list');
     }
+    
+    public function getDetail() 
+    {
+        return view('admin.product_option.detail');
+    }
+    
 }

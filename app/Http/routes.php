@@ -63,6 +63,9 @@ Route::group([
             'prefix' => 'user'
         ], function () {
             
+            Route::post('/save', 'UserController@save');
+            Route::get('/all', 'UserController@all');
+            
         });
 
         Route::group([
@@ -115,6 +118,7 @@ Route::group([
         ], function () {
             
             Route::get('/all', 'ProductOptionController@all');
+            Route::get('/find/{id}', 'ProductOptionController@find');
             Route::get('/byProduct/{id}', 'ProductOptionController@byProduct');
             Route::get('/getStoreUrl/{id}', 'ProductOptionController@getStoreUrl');
             Route::post('/save', 'ProductOptionController@save');
@@ -133,6 +137,16 @@ Route::group([
          
             Route::post('/paginateWithFilters/{page}', 'RecipeController@paginateWithFilters');
             Route::post('/trendingWithFilters/{page}', 'RecipeController@trendingWithFilters');
+            
+        });
+        
+        Route::group([
+            'prefix' => 'report'
+        ], function () {
+            
+            Route::get('/redirectsByProductOption/{id}', 'ReportController@redirectsByProductOption');
+            Route::get('/clicksByProductOption/{id}', 'ReportController@clicksByProductOption');
+            Route::get('/viewsByProductOption/{id}', 'ReportController@viewsByProductOption');
             
         });
         
@@ -224,6 +238,7 @@ Route::group([
         
         Route::get('/new', 'ViewController@getNew');
         Route::get('/list', 'ViewController@getList');
+        Route::get('/detail', 'ViewController@getDetail');
         
     });
     

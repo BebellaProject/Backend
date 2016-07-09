@@ -148,6 +148,15 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                         }
                     }
                 })
+                
+                .state('product_option_detail', {
+                    url: '/product_option/{productOptionId}/detail',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('product_option/detail')
+                        }
+                    }
+                })
         
                 .state('home', {
                     url: '/',

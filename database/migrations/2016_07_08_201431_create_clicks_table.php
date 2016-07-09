@@ -19,6 +19,7 @@ class CreateClicksTable extends Migration
             $table->unsignedInteger('recipe_id')->nullable(false);
             $table->unsignedInteger('user_id')->nullable(false);
             
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

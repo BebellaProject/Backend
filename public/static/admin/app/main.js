@@ -1,4 +1,4 @@
-var Bebella = angular.module('Bebella', ['ui.router', 'datatables', 'ngStorage']);
+var Bebella = angular.module('Bebella', ['ui.router', 'datatables', 'angular-flot']);
 
 var APP_URL = $("#APP_URL").val();
 var API_TOKEN = $("#API_TOKEN").val();

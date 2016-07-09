@@ -19,6 +19,24 @@ use Bebella\Http\Controllers\Controller;
 
 class ProductOptionController extends Controller
 {
+    
+    public function find($id) 
+    {
+        return ProductOption::where('product_options.id', $id)
+                            ->where('product_options.active', true)
+                            ->join('products', function ($join) {
+                                $join->on('product_options.product_id' , '=', 'products.id');
+                            })
+                            ->join('stores', function ($join) {
+                                $join->on('product_options.store_id' , '=', 'stores.id');
+                            })
+                            ->select(
+                                "product_options.*",
+                                "products.name as product_name",    
+                                "stores.name as store_name"
+                            )->first();
+    }
+    
     public function getStoreUrl($id, Request $request) 
     {
         $user = Auth::guard('api')->user();
