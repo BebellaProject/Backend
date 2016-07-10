@@ -13,6 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         "auth/api_login",
+        "auth/api_register",
         "api/*"
     ];
 }

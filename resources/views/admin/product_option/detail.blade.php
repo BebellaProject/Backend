@@ -28,13 +28,10 @@
 
         <div class="col s12 m12 l4">
             
-            <p>{{ productOption.product_name }}</p>
-            
-            <img src="<% $APP_URL %>/{{ productOption.image_path }}">
-            
             <p>Informações</p>
             
             <a ui-sref="product_option_edit({productOptionId: {{productOption.id}}})">Formulário de Cadastro</a>
+            
             
         </div>
 

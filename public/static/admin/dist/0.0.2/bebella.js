@@ -1051,6 +1051,21 @@ Bebella.controller('ProductOptionDetailCtrl', ['$scope', '$stateParams', 'Breadc
             {url: 'product_option_list', text: 'Lista'},
             {text: 'Opção de Produto'}
         ];
+        
+        $scope.viewClickDataset = [
+            {
+                color: "#fb2b67",
+                label: "visualizações",
+                shadowSize: 1,
+                data: []
+            },
+            {
+                color: "#ff6511",
+                label: "cliques",
+                shadowSize: 1,
+                data: []
+            }
+        ];
 
         $scope.redirectOptions = {
             legend: {
@@ -1059,7 +1074,7 @@ Bebella.controller('ProductOptionDetailCtrl', ['$scope', '$stateParams', 'Breadc
             },
             series: {
                 lines: {
-                    lineWidth: 1
+                    lineWidth: 2
                 }
             },
             xaxis: {
@@ -1077,7 +1092,7 @@ Bebella.controller('ProductOptionDetailCtrl', ['$scope', '$stateParams', 'Breadc
             },
             series: {
                 lines: {
-                    lineWidth: 1
+                    lineWidth: 2
                 }
             },
             xaxis: {
@@ -1103,9 +1118,9 @@ Bebella.controller('ProductOptionDetailCtrl', ['$scope', '$stateParams', 'Breadc
                 function onSuccess(results) {
                     $scope.redirectDataset = [
                         {
-                            color: "blue",
-                            label: "visualizações",
-                            shadowSize: 0,
+                            color: "#fb2b67",
+                            label: "redirecionamentos",
+                            shadowSize: 1,
                             data: _.map(results, function (e) {
                                 return [new Date(e.date), e.count];
                             })
@@ -1128,7 +1143,9 @@ Bebella.controller('ProductOptionDetailCtrl', ['$scope', '$stateParams', 'Breadc
 
         ReportRepository.viewsByProductOption($stateParams.productOptionId).then(
                 function onSuccess(results) {
-
+                    $scope.viewClickDataset[0].data = _.map(results, function (e) {
+                        return [new Date(e.date), e.count];
+                    });
                 },
                 function onError(res) {
                     alert("Houve um erro na obtenção da lista de visualizações");

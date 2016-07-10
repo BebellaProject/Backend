@@ -30,6 +30,7 @@ Route::group([
     Route::post('/login', 'AuthController@postlogin');
    
     Route::post('/api_login', 'AuthController@postApiLogin');
+    Route::post('/api_register', 'AuthController@postApiRegister');
     
 });
 

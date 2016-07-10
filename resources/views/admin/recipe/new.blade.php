@@ -24,6 +24,8 @@
                                     <option value="beauty">Beleza</option>
                                     <option value="decoration">Decoração</option>
                                     <option value="clothing">Vestimenta</option>
+                                    <option value="food">Culinária</option>
+                                    <option value="health">Saúde</option>
                                 </select>
                                 <label for="input2" ng-class="{active: recipe.type}">Tipo</label>
                             </div>

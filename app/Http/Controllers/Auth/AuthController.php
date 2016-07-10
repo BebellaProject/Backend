@@ -91,6 +91,20 @@ class AuthController extends Controller
         return response()->json("Error", 500);
     }
     
+    public function postApiRegister(Request $request) 
+    {
+        $user = new User;
+        
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->api_token = str_random(120);
+        
+        $user->save();
+        
+        return $user;
+    }
+    
     public function redirectPath() 
     {
         $user = Auth::user();

@@ -33,7 +33,8 @@ class ProductOptionController extends Controller
                             ->select(
                                 "product_options.*",
                                 "products.name as product_name",    
-                                "stores.name as store_name"
+                                "stores.name as store_name",
+                                "stores.image_path as store_image_path"    
                             )->first();
     }
     

@@ -24,6 +24,7 @@ class ReportController extends Controller
                               DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d 00:00:00') as `date`"),
                               DB::raw("COUNT(id) as `count`")    
                           )
+                          ->groupBy('date')
                           ->get();
     }
     
@@ -38,6 +39,11 @@ class ReportController extends Controller
     {
         return Visualization::where('product_option_id', $id)
                             ->where('active', true)
+                            ->select(
+                                DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d 00:00:00') as `date`"),
+                                DB::raw("COUNT(id) as `count`")    
+                            )
+                            ->groupBy('date')
                             ->get();
     }
     
