@@ -1,1 +1,160 @@
-<h1> Web </h1>
+<!DOCTYPE html>
+<html lang="en" ng-app="Bebella">
+
+    <!--================================================================================
+            Item Name: Materialize - Material Design Admin Template
+            Version: 3.1
+            Author: GeeksLabs
+            Author URL: http://www.themeforest.net/user/geekslabs
+    ================================================================================ -->
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="description" content="Aplicativo Bebella para compartilhar dicas e truques para transformarmos nosso redor ">
+        <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+        <title>Bebella | Rede social para compartilhar dicas e truques para transformarmos nosso redor</title>
+
+        <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
+        <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
+        <meta name="msapplication-TileColor" content="#00bcd4">
+        <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
+
+        <link href="<% $STATIC_URL %>/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<% $STATIC_URL %>/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<% $STATIC_URL %>/css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+        <link href="<% $STATIC_URL %>/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    </head>
+
+    <body class="bebella-color-1-lighten-4">
+        <div id="loader-wrapper">
+            <div id="loader"></div>        
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+        </div>
+
+        <nav class="bebella-color-1" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="#" class="brand-logo">
+                    Logo
+                
+                </a>
+                <ul class="right">
+                    <li><a href="<% $APP_URL %>/auth/login">Logar-se</a></li>
+                </ul>
+                
+            </div>
+        </nav>
+        <div class="section no-pad-bot" id="index-banner">
+            <div class="container">
+                <br><br>
+                <h1 class="header center bebella-text-2">Bebella</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light">
+                        Uma Rede Social para compartilhar dicas e truques para nos <br>
+                        ensinarmos a deixar nosso encanto em cada canto
+                    </h5>
+                </div>
+                <div class="row center">
+                    <a target="_blank" href="https://play.google.com/store/apps/details?id=com.ionicframework.mobile321050&hl=pt_BR" id="download-button" class="btn-large waves-effect waves-light bebella-color-2">Baixe o APP</a>
+                </div>
+                <br><br>
+
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="section">
+
+                <!--   Icon Section   -->
+                <div class="row">
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center bebella-text-2"><i class="mdi-action-favorite large"></i></h2>
+                            <h5 class="center">Speeds up development</h5>
+
+                            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center bebella-text-2"><i class="mdi-action-favorite large"></i></h2>
+                            <h5 class="center">User Experience Focused</h5>
+
+                            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center bebella-text-2"><i class="mdi-action-favorite large"></i></h2>
+                            <h5 class="center">Easy to work with</h5>
+
+                            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br><br>
+
+            <div class="section">
+
+            </div>
+        </div>
+
+        <footer class="page-footer bebella-color-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Company Bio</h5>
+                        <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+
+
+                    </div>
+                    <div class="col l3 s12">
+                        <h5 class="white-text">Settings</h5>
+                        <ul>
+                            <li><a class="white-text" href="#!">Link 1</a></li>
+                            <li><a class="white-text" href="#!">Link 2</a></li>
+                            <li><a class="white-text" href="#!">Link 3</a></li>
+                            <li><a class="white-text" href="#!">Link 4</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l3 s12">
+                        <h5 class="white-text">Connect</h5>
+                        <ul>
+                            <li><a class="white-text" href="#!">Link 1</a></li>
+                            <li><a class="white-text" href="#!">Link 2</a></li>
+                            <li><a class="white-text" href="#!">Link 3</a></li>
+                            <li><a class="white-text" href="#!">Link 4</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright bebella-color-1">
+                <div class="container">
+                    Copyright <a class="orange-text text-lighten-3" href="mailto:diego.mrodrigues@outlook.om">Diego Rodrigues</a> 2016
+                </div>
+            </div>
+        </footer>
+
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/jquery-1.11.2.min.js"></script>    
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/materialize.min.js"></script>
+        <!--prism
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/prism/prism.js"></script>-->
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.js"></script>   
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
+
+    </body>
+
+</html>
