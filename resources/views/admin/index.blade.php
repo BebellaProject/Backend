@@ -414,7 +414,7 @@
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-flot/angular-flot.js"></script>
         
-        <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.2/bebella.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.4/bebella.js"></script>
 
     </body>
 

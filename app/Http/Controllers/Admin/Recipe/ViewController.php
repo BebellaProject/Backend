@@ -18,4 +18,10 @@ class ViewController extends Controller
     {
         return view('admin.recipe.list');
     }
+    
+    public function getEdit() 
+    {
+        return view('admin.recipe.edit');
+    }
+    
 }

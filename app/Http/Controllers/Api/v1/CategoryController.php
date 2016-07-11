@@ -38,7 +38,12 @@ class CategoryController extends Controller
     public function edit(Request $request) 
     {
         return Category::where('id', $request->id)
-                       ->update($request->all());
+                       ->update(
+                        array_except(
+                            $request->all(),
+                            "api_token"
+                        )    
+                      );
     }
     
 }

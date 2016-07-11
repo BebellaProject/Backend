@@ -258,6 +258,7 @@ Route::group([
         
         Route::get('/new', 'ViewController@getNew');
         Route::get('/list', 'ViewController@getList');
+        Route::get('/edit', 'ViewController@getEdit');
         
     });
     

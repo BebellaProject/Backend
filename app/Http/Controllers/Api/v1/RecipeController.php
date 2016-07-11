@@ -12,6 +12,7 @@ use Bebella\RecipeStep;
 use Bebella\RecipeProduct;
 
 use Bebella\Events\Admin\RecipeWasCreated;
+use Bebella\Events\Admin\RecipeWasEdited;
 use Bebella\Events\Admin\RecipeStepWasCreated;
 use Bebella\Events\Mobile\RecipeWasViewed;
 
@@ -177,5 +178,79 @@ class RecipeController extends Controller
         
         return $recipe;
     }
+    
+    public function edit(Request $request) 
+    {
+        Recipe::where('id', $request->id)
+                ->update([
+                    "name" => $request->name,
+                    "desc" => $request->desc,
+                    "channel_id" => $request->id,
+                    "type" => $request->type
+                ]);
+        
+        if ($request->main_image) {
+            Event::fire(new RecipeWasEdited($recipe, $request));
+        }
+        
+        RecipeTag::where('recipe_id', $request->id)
+                 ->update([
+                    'active' => false
+                 ]);
+        
+        foreach ($request->tags as $key => $value) 
+        {
+            $tag = new RecipeTag;
+            
+            $tag->recipe_id = $request->id;
+            $tag->name = $value["name"];
+
+            $tag->save();
+        }
+        
+        RecipeProduct::where('recipe_id', $request->id)
+                     ->update([
+                        'active' => false
+                     ]);
+        
+        foreach ($request->products as $key => $value) 
+        {
+            $product = new RecipeProduct;
+            
+            $product->recipe_id = $request->id;
+            $product->product_id = $value["product_id"];
+            
+            $product->save();
+        }
+        
+        RecipeStep::where('recipe_id', $request->id)
+                  ->update([
+                      'active' => false
+                   ]);
+        
+        foreach ($request->steps as $key => $value) 
+        {
+            $step = new RecipeStep;
+            
+            $step->recipe_id = $request->id;
+            $step->desc = $value["desc"];
+            $step->order = $key + 1;
+            
+            $step->save();
+            
+            if (array_has($value, "image")) 
+            {
+                Event::fire(new RecipeStepWasCreated($step, $value));    
+            }
+            else 
+            {
+                $step->image_path = $value["image_path"];
+                
+                $step->save();
+            }
+        }
+        
+        return 1;
+    } 
     
 }

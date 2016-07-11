@@ -43,7 +43,12 @@ class ProductController extends Controller
     public function edit(Request $request) 
     {
         return Product::where('id', $request->id)
-                      ->update($request->all());
+                      ->update(
+                        array_except(
+                            $request->all(),
+                            "api_token"
+                        )    
+                      );
     }
     
 }

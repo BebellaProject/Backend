@@ -32,6 +32,15 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                     }
                 })
                 
+                .state('recipe_edit', {
+                    url: '/recipe/{recipeId}/edit',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('recipe/edit')
+                        }
+                    }
+                })
+                
                 .state('recipe_list', {
                     url: '/recipe/list',
                     views: {
