@@ -1,0 +1,106 @@
+.bebella-color-1 {
+    background-color: #fb2b67 !important;
+}
+
+.bebella-text-1 {
+    color: #fb2b67 !important;
+}
+
+.bebella-color-1-lighten-1 {
+    background-color: #EB5A83 !important;
+}
+
+.bebella-text-1-lighten-1 {
+    color: #EB5A83 !important;
+}
+
+.bebella-color-1-lighten-2 {
+    background-color: #EB7496 !important;
+}
+
+.bebella-text-1-lighten-2 {
+    color: #EB7496 !important;
+}
+
+.bebella-color-1-lighten-3 {
+    background-color: #EFA8BC !important;
+}
+
+.bebella-text-1-lighten-3 {
+    color: #EFA8BC !important;
+}
+
+.bebella-color-1-lighten-4 {
+    background-color: #F6DEE5 !important;
+}
+
+.bebella-text-1-lighten-4 {
+    color: #F6DEE5 !important;
+}
+
+.bebella-color-2 {
+    background-color: #ff6511 !important;
+}
+
+.bebella-text-2 {
+    color: #ff6511 !important;
+}
+
+.bebella-color-3 {
+    background-color: #fd6490 !important;
+}
+
+.bebella-text-3 {
+    color: #fd6490 !important;
+}
+
+.bebella-color-4 {
+    background-color: #bf3154 !important;
+}
+
+.bebella-text-4 {
+    color: #bf3154 !important;
+}
+
+a.active {
+    color: #fb2b67 !important;
+}
+
+.dataTable a {
+    color: #fb2b67 !important;
+}
+
+.bebella-sidemenu-text {
+    color: #999;
+    font-size: 16px;
+    margin-bottom: 0px !important;
+}
+
+.bebella-sidemenu-text.active {
+    color: #ff6511 !important;
+}
+
+ul.bebella-header-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+ul.bebella-header-menu li {
+    float: left;
+}
+
+ul.bebella-header-menu li a {
+    display: inline-block;
+    text-align: center;
+    color: #999;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+ul.bebella-header-menu li a.active {
+    color: #ff6511;
+}

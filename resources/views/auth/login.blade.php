@@ -31,7 +31,7 @@
   
 </head>
 
-<body class="cyan">
+<body class="bebella-color-1">
   <div id="loader-wrapper">
       <div id="loader"></div>        
       <div class="loader-section section-left"></div>
@@ -63,7 +63,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <button type="submit" class="btn waves-effect waves-light col s12">LOGAR-SE</button>
+            <button type="submit" class="btn waves-effect waves-light col s12 bebella-color-2">LOGAR-SE</button>
           </div>
         </div>
        
