@@ -14,7 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="description" content="Aplicativo Bebella para compartilhar dicas e truques para transformarmos nosso redor ">
-        <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+        <meta name="keywords" content="">
         <title>Bebella | Rede social para compartilhar dicas e truques para transformarmos nosso redor</title>
 
         <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">

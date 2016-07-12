@@ -2,6 +2,13 @@
   "name": "orquestra-admin",
   "directory": "bower_components",
   "private": true,
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "angular-ui-router": "ui-router#^0.3.1",
+    "datatables": "^1.10.12",
+    "angular-flot": "^0.0.16",
+    "ngstorage": "^0.3.10",
+    "underscore": "^1.8.3",
+    "angular-datatables": "^0.5.4"
   }
 }

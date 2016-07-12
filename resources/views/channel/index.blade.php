@@ -13,9 +13,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="msapplication-tap-highlight" content="no">
-        <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
-        <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-        <title>Page Blank | Materialize - Material Design Admin Template</title>
+        <meta name="description" content="Aplicativo Bebella para compartilhar dicas e truques para transformarmos nosso redor ">
+        <meta name="keywords" content="">
+        <title>Bebella | Nome do Canal</title>
 
         <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
         <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
@@ -39,6 +39,9 @@
             <div class="loader-section section-right"></div>
         </div>
 
+        <input type="hidden" id="APP_URL" value="<% $APP_URL %>" />
+        <input type="hidden" id="API_TOKEN" value="<% $API_TOKEN %>" />
+        
         <div id="main" style="padding-left: 0px !important;">
             <div class="wrapper">
 
@@ -60,59 +63,32 @@
                                         </div>
 
                                         <div class="col s7">
-                                            <ul class="bebella-header-menu">
+                                            <ul class="bebella-header-menu" ng-init="route_idx = 0">
                                                 <li>
-                                                    <a class="active">Dashboard</a>
-                                                    <a>Receitas</a>
-                                                    <a>Mensagens</a>
+                                                    <a ui-sref="dashboard.profile" ng-click="route_idx = 0" ng-class="{ active: (route_idx == 0) }">Dashboard</a>
+                                                    <a ui-sref="recipes" ng-click="route_idx = 1" ng-class="{ active: (route_idx == 1) }">Receitas</a>
+                                                    <a ng-click="route_idx = 2" ng-class="{ active: (route_idx == 2) }">Mensagens</a>
                                                 </li>
                                             </ul>
                                         </div>
                                         
                                         <div class="col s3 hide-on-small-only">
-                                            <a class="waves-effect waves-light btn bebella-color-1 right">Nova Receita</a>
+                                            <a ui-sref="new_recipe" class="waves-effect waves-light btn bebella-color-1 right" ng-click="route_idx = -1">Nova Receita</a>
                                         </div>
 
                                     </div>
 
                                     <div class="row">
 
-                                        <div class="col s12 m12 l6">                        
-                                            <h4 class="card-title grey-text text-darken-4">Nome do Canal</h4>
-                                            <p class="medium-small grey-text">Breve descrição do canal</p>                        
+                                        <div class="col s12 m12 l12">                        
+                                            <h4 class="card-title grey-text text-darken-4"><% $CHANNEL->name %></h4>
+                                            <p class="medium-small grey-text"><% $CHANNEL->desc %></p>                        
                                         </div>
 
                                     </div>                                
+                                
 
-                                    <div class="row">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col s12 m12 l12">
-                                                    <ol class="breadcrumbs" style="margin: 0px;">
-                                                        <li ><a class="bebella-text-2" href="index.html">Dashboard</a>
-                                                        </li>
-                                                        <li ><a class="bebella-text-2" href="#">CSS</a>
-                                                        </li>
-                                                        <li class="active">Grid</li>
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>                                
-
-                                    <div class="row">
-                                        <div class="col l3 m4 hide-on-small-only">
-                                            <p class="bebella-sidemenu-text active" style="margin-top: 0px;">Perfil</p>
-
-                                            <p class="bebella-sidemenu-text">Estatísticas</p>
-
-                                        </div>
-
-                                        <div class="col l9 m8 s12">
-                                            Mussum Ipsum, cacilds vidis litro abertis. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. Interagi no mé, cursus quis, vehicula ac nisi.  Viva Forevis aptent taciti sociosqu ad litora torquent
-
-                                        </div>
-
+                                    <div class="row" ui-view="Content">
                                     </div>                                
 
                                 </div>
@@ -128,14 +104,28 @@
         </div>
 
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/jquery-1.11.2.min.js"></script>    
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/underscore/underscore-min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/materialize.min.js"></script>
-        <!--prism
-        <script type="text/javascript" src="<% $STATIC_URL %>/js/prism/prism.js"></script>-->
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.pie.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.stack.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.time.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.js"></script>   
+
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
 
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-flot/angular-flot.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/ngstorage/ngStorage.min.js"></script>
+        
+        <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.4/bebella.js"></script>
     </body>
 
 </html>

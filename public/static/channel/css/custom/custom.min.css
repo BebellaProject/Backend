@@ -77,7 +77,7 @@ a.active {
 }
 
 .bebella-sidemenu-text.active {
-    color: #ff6511 !important;
+    color: #fb2b67 !important;
 }
 
 ul.bebella-header-menu {
@@ -102,5 +102,8 @@ ul.bebella-header-menu li a {
 }
 
 ul.bebella-header-menu li a.active {
-    color: #ff6511;
+    color: #fb2b67;
+    border-bottom: 2px solid #fb2b67;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
 }

@@ -282,6 +282,35 @@ Route::group([
 ], function () {
     
     Route::get('/', 'IndexController@getIndex');
+   
+    Route::group([
+        'namespace' => 'Dashboard',
+        'prefix' => 'dashboard'
+    ], function () {
+        
+        Route::get('/', 'ViewController@getIndex');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Profile',
+        'prefix' => 'profile'
+    ], function () {
+        
+        Route::get('/', 'ViewController@getIndex');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Recipe',
+        'prefix' => 'recipe'
+    ], function () {
+        
+        Route::get('/list', 'ViewController@getList');
+        Route::get('/new', 'ViewController@getNew');
+        
+    });
+    
     
 });
 

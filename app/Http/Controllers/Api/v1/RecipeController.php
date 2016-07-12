@@ -21,7 +21,7 @@ class RecipeController extends Controller
 {
 
     public function find($id)
-    {
+    {   
         $recipe = Recipe::where('recipes.id', $id)
                 ->join('channels', function ($join)
                 {
@@ -31,7 +31,7 @@ class RecipeController extends Controller
                         'recipes.*', 'channels.name as channel_name', 'channels.image_path as channel_image'
                 )
                 ->first();
-
+                
         Event::fire(new RecipeWasViewed($recipe));
 
         $recipe["tags"] = RecipeTag::where('recipe_id', $id)
@@ -114,7 +114,7 @@ class RecipeController extends Controller
                     ->where('recipes.id', '!=', $recipe->id)
                     ->whereNotIn('recipes.id', collect($array)->map(function ($e)
                             {
-                                return $e->id;
+                                return $e["id"];
                             }))
                     ->join('channels', function ($join)
                     {
@@ -139,7 +139,7 @@ class RecipeController extends Controller
                     ->where('recipes.id', '!=', $recipe->id)
                     ->whereNotIn('recipes.id', collect($array)->map(function ($e)
                             {
-                                return $e->id;
+                                return $e["id"];
                             }))
                     ->join('channels', function ($join)
                     {
