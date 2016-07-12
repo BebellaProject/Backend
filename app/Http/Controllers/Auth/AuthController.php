@@ -96,6 +96,7 @@ class AuthController extends Controller
         $user = new User;
         
         $user->name = $request->name;
+        $user->type = "user";
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->api_token = str_random(120);

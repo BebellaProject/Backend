@@ -144,6 +144,8 @@ Route::group([
             Route::post('/save', 'RecipeController@save');
             Route::post('/edit', 'RecipeController@edit');
          
+            Route::post('/comment/{id}', 'RecipeController@comment');
+            
             Route::post('/paginateWithFilters/{page}', 'RecipeController@paginateWithFilters');
             Route::post('/trendingWithFilters/{page}', 'RecipeController@trendingWithFilters');
             
