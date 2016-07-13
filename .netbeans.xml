@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <auxiliary-configuration xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1">
     <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+        <word>atrairão</word>
         <word>muito</word>
+        <word>objetivo</word>
+        <word>produto</word>
+        <word>serão</word>
         <word>usuário</word>
         <word>vezes</word>
     </spellchecker-wordlist>

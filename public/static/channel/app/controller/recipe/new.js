@@ -1,5 +1,7 @@
-Bebella.controller('RecipeNewCtrl', ['$scope',
-    function ($scope) {
+Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe',
+    function ($scope, Recipe) {
+        
+        $scope.recipe = new Recipe();
         
     }
 ]);

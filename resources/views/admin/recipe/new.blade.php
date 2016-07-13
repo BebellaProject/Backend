@@ -19,7 +19,7 @@
                                 <label for="input1"  ng-class="{active: recipe.channel_id}">Canal</label>
                             </div>
                             <div class="input-field col s12 m6 l6">
-                                <select ng-model="recipe.type" id="input1" class="browser-default"
+                                <select ng-model="recipe.type" id="input1" class="browser-default">
                                     <option value=""></option>
                                     <option value="beauty">Beleza</option>
                                     <option value="decoration">Decoração</option>

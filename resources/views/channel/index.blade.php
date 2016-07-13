@@ -29,7 +29,10 @@
 
         <link href="<% $STATIC_URL %>/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-        <link href="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+        
+        <link href="<% $STATIC_URL %>/js/plugins/dropify/css/dropify.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<% $STATIC_URL %>/bower_components/select2/dist/css/select2.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    
     </head>
 
     <body class="white">
@@ -105,20 +108,26 @@
 
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/jquery-1.11.2.min.js"></script>    
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/underscore/underscore-min.js"></script>
+        <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/select2/dist/js/select2.full.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/materialize.min.js"></script>
+        
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.pie.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.stack.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.time.js"></script>
-        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.js"></script>   
 
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/formatter/jquery.formatter.min.js"></script>   
+        
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
         <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
 
+        <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/dropify/js/dropify.min.js"></script>
+        
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
         <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-datatables/dist/angular-datatables.min.js"></script>

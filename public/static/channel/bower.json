@@ -9,6 +9,7 @@
     "angular-flot": "^0.0.16",
     "ngstorage": "^0.3.10",
     "underscore": "^1.8.3",
-    "angular-datatables": "^0.5.4"
+    "angular-datatables": "^0.5.4",
+    "select2": "^4.0.3"
   }
 }
