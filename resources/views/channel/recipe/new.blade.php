@@ -69,8 +69,8 @@
             </div>
 
             <div class="input-field col s12 m12 l12" ng-show="recipe.has_video">
-                <input ng-model="recipe.video_url" id="input5" type="text" class="validate">
-                <label for="input5" ng-class="{active: recipe.video_url}">Link do Vídeo no Youtube</label>
+                <input ng-model="videoUrl" id="input5" type="text" class="validate">
+                <label for="input5" ng-class="{active: videoUrl}">Link do Vídeo no Youtube</label>
             </div>
 
         </div>
@@ -103,62 +103,65 @@
 
     </div>
 
-    <div class="row" >
-        <p class="caption">Etapa 1</p>
-        
-        <div class="col s12 m4 l3">
-            <input type="file" id="input-file-now" class="dropify-step" 
-                   accept="image/*" fileread="recipe.main_image" />
+    <div ng-repeat="step in recipe.steps">
+        <div class="row" ng-if="step.type == 'image'">
+            <p class="caption">Etapa {{ $index + 1 }}</p>
+
+            <div class="col s12 m4 l3">
+                <input type="file" id="input-file-now" class="dropify-step" 
+                       accept="image/*" fileread="step.image_path" />
+            </div>
+
+            <div class="input-field col s10 m7 l8">
+                <textarea id="stepn" ng-model="step.desc" style="height: 40px;" class="materialize-textarea"></textarea>
+                <label for="stepn" ng-class="{active: step.desc}">Descrição</label>
+            </div>
+
+            <div class="col s2 m1 l1">
+                <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" ng-if="$index != 0" ng-click="moveStep($index, $index - 1)" style="margin-top: 10px;"><i class="mdi-navigation-expand-less"></i></a>
+                <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" ng-click="removeStep($index)" style="margin-top: 10px;"><i class="mdi-action-delete"></i></a>
+            </div>
         </div>
 
-        <div class="input-field col s10 m7 l8">
-            <textarea id="stepn" ng-model="recipe.desc" style="height: 40px;" class="materialize-textarea"></textarea>
-            <label for="stepn" ng-class="{active: recipe.desc}">Descrição</label>
+        <div class="row" ng-if="step.type == 'moment'">
+            <p class="caption">Etapa {{ $index + 1 }}</p>
+
+            <div class="input-field col s12 m4 l3">
+                <input id="time1" type="text" class="time-picker" ng-model="step.moment" style="margin-top: 48px;">
+                <label for="time1" style="margin-top: 48px;">Momento</label>
+            </div>
+
+            <div class="input-field col s10 m7 l8">
+                <textarea id="stepn" ng-model="step.desc" style="height: 40px;" class="materialize-textarea"></textarea>
+                <label for="stepn" ng-class="{active: step.desc}">Descrição</label>
+            </div>
+
+            <div class="col s2 m1 l1">
+                <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" ng-if="$index != 0" ng-click="moveStep($index, $index - 1)" style="margin-top: 10px;"><i class="mdi-navigation-expand-less"></i></a>
+                <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" ng-click="removeStep($index)" style="margin-top: 10px;"><i class="mdi-action-delete"></i></a>
+            </div>
+
+            <script type="text/javascript">
+                $('.dropify-step').dropify({
+                    tpl: {
+                        wrap: '<div class="dropify-wrapper" style="max-height:110px;"></div>',
+                        filename: ''
+                    }
+                });
+
+                $('.time-picker').formatter({
+                    'pattern': '{{99}}:{{99}}',
+                });
+            </script>
         </div>
 
-        <div class="col s2 m1 l1">
-            <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" style="margin-top: 10px;"><i class="mdi-navigation-expand-less"></i></a>
-            <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" style="margin-top: 10px;"><i class="mdi-action-delete"></i></a>
-        </div>
     </div>
-
-    <div class="row" >
-        <p class="caption">Etapa 2</p>
         
-        <div class="input-field col s12 m4 l3">
-            <input id="time1" type="text" class="time-picker" style="margin-top: 48px;">
-            <label for="time1" style="margin-top: 48px;">Momento</label>
-        </div>
-
-        <div class="input-field col s10 m7 l8">
-            <textarea id="stepn" ng-model="recipe.desc" style="height: 40px;" class="materialize-textarea"></textarea>
-            <label for="stepn" ng-class="{active: recipe.desc}">Descrição</label>
-        </div>
-
-        <div class="col s2 m1 l1">
-            <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" style="margin-top: 10px;"><i class="mdi-navigation-expand-less"></i></a>
-            <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" style="margin-top: 10px;"><i class="mdi-action-delete"></i></a>
-        </div>
-
-        <script type="text/javascript">
-            $('.dropify-step').dropify({
-                tpl: {
-                    wrap: '<div class="dropify-wrapper" style="max-height:110px;"></div>',
-                    filename: ''
-                }
-            });
-
-            $('.time-picker').formatter({
-                'pattern': '{{99}}:{{99}}',
-            });
-        </script>
-    </div>
-
     <div class="row" >
-        <a class="btn btn-flat waves-effect waves-light bebella-color-2 white-text" style="margin-left: 10px;">
+        <a class="btn btn-flat waves-effect waves-light bebella-color-2 white-text" ng-click="insertImageStep()" style="margin-left: 10px;">
             <i class="mdi-image-photo"></i>
         </a>
-        <a class="btn btn-flat waves-effect waves-light bebella-color-2 white-text" style="margin-left: 10px;" ng-show="recipe.has_video">
+        <a class="btn btn-flat waves-effect waves-light bebella-color-2 white-text" ng-click="insertMomentStep()" style="margin-left: 10px;" ng-show="recipe.has_video">
             <i class="mdi-action-theaters"></i>
         </a>
     </div>
@@ -183,61 +186,35 @@
         </div>
 
         <div class="input-field col s12 m9 l7">
-            <select id="select_product" ng-mode="recipe.test">
+            <select id="select_product" ng-model="selectedProduct">
                 <option value="-1">Novo Produto</option>
 
-                <optgroup label="Tipo X">
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste A</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
+                <optgroup ng-repeat="category in categories" label="{{ category[0].category_name }}">
+                    <option ng-repeat="product in category" value="{{ product.id }}">{{ product.name }}</option>
                 </optgroup>
-
-                <optgroup label="Tipo X">
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste A</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                    <option value="Teste">Teste</option>
-                </optgroup>
-
+  
             </select>
         </div>
 
         <div class="col s2 m3 l2 right-align">
             <a class="btn waves-effect waves-light bebella-color-2 white-text"
                title="Adicionar novo produto"
-               style=" margin-top: 10px;">
+               style=" margin-top: 10px;"
+               ng-click="addProduct()">
                 <i class="mdi-content-add"></i>
             </a>
         </div>
 
     </div>
 
-    <div class="row">
+    <div class="row" ng-repeat="product in recipe.products">
         <div class="col m3 l2 hide-on-small-only">
-            <img style="width: 100%; max-width: 150px; max-height: 150px;" src="<% $APP_URL %>/storage/images/product/1467827377-1.jpeg">
+            <img style="width: 100%; max-width: 125px; max-height: 125px;" src="<% $APP_URL %>/{{ product.image_path }}">
         </div>
 
         <div class="col s10 m7 l8">
-            <p class="title" style="margin-top: 0px; margin-bottom: 2px;">Nome do Produto</p>
-            <p class="caption" style="margin-top: 0px; margin-bottom: 0px;">Mussum Ipsum, cacilds vidis litro abertis.</p>
-            <p style="margin-top: 10px;">15 Opções de produto em nosso catálogo</p>
+            <p class="title" style="margin-top: 0px; margin-bottom: 2px;">{{ product.name }}</p>
+            <p class="caption" style="margin-top: 0px; margin-bottom: 0px;">{{ product.short_desc }}</p>
         </div>
 
         <div class="col s2 m2 l2">

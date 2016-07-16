@@ -261,6 +261,71 @@ class RecipeController extends Controller
                         ->get();
     }
 
+    public function sendForApproval(Request $request) 
+    {
+        $user = Auth::guard('api')->user();
+        $recipe = new Recipe;
+        
+        $recipe->type = $request->type;
+        $recipe->channel_id = $user->channel()->id;
+        $recipe->name = $request->name;
+        $recipe->desc = $request->desc;
+        
+        $recipe->active = false;
+        $recipe->is_under_approval = true;
+        
+        $recipe->has_video = $request->has_video;
+        
+        $recipe->save();
+        
+        Event::fire(new RecipeWasCreated($recipe, $request));
+        
+        foreach ($request->tags as $value)
+        {
+            $tag = new RecipeTag;
+
+            $tag->recipe_id = $recipe->id;
+            $tag->name = $value;
+
+            $tag->save();
+        }
+        
+        foreach ($request->steps as $key => $value) 
+        {
+            $step = new RecipeStep;
+            
+            $step->recipe_id = $recipe->id;
+            $step->desc = $value["desc"];
+            $step->type = $value["type"];
+            $step->order = $key + 1;
+            
+            $step->save();
+            
+            if ($step->type == "image") 
+            {
+                Event::fire(new RecipeStepWasCreated($step, $request));
+            }
+            else 
+            {
+                $step->moment = $value["moment"];
+                
+                $step->save();
+            }
+        }
+        
+        foreach ($request->products as $key => $value)
+        {
+            $product = new RecipeProduct;
+
+            $product->recipe_id = $recipe->id;
+            $product->product_id = $value["product_id"];
+
+            $product->save();
+        }
+        
+        
+    }
+    
     public function save(Request $request)
     {
         $recipe = Recipe::create($request->all());

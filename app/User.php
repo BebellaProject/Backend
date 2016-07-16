@@ -23,4 +23,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function channel() 
+    {
+        return Channel::where('user_id', $this->id)->first();
+    }
 }

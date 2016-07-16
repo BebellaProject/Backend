@@ -7,9 +7,9 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                 
                 .state('recipes', {
                     url: '/recipe/list',
-                    controller: 'RecipeListCtrl',
                     views: {
                         Content: {
+                            controller: 'RecipeListCtrl',
                             templateUrl: view('recipe/list')
                         }
                     }
@@ -17,9 +17,9 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                 
                 .state('new_recipe', {
                     url: '/recipe/new',
-                    controller: 'RecipeNewCtrl',
                     views: {
                         Content: {
+                            controller: 'RecipeNewCtrl',
                             templateUrl: view('recipe/new')
                         }
                     }
@@ -27,9 +27,9 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                 
                 .state('dashboard', {
                     url: '/dashboard',
-                    controller: 'HomeIndexCtrl',
                     views: {
                         Content: {
+                            controller: 'HomeIndexCtrl',
                             templateUrl: view('dashboard')
                         }
                     }
@@ -37,9 +37,9 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                 
                 .state('dashboard.profile', {
                     url: '/profile',
-                    controller: 'ProfileIndexCtrl',
                     views: {
                         SubContent: {
+                            controller: 'ProfileIndexCtrl',
                             templateUrl: view('profile')
                         }
                     }
@@ -47,9 +47,9 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                 
                 .state('dashboard.stats', {
                     url: '/stats',
-                    controller: 'StatsIndexCtrl',
                     views: {
                         SubContent: {
+                            controller: 'StatsIndexCtrl',
                             templateUrl: view('stats')
                         }
                     }

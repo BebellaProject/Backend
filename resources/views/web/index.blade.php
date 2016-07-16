@@ -80,7 +80,7 @@
                             <h5 class="center">Produtores de Conteúdo</h5>
 
                             <p class="light">
-                                We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.
+                                Para produtores de conteúdo, uma área exclusiva onde você poderá administrar suas receitas e visualizar estatísticas de acesso e divulgação. Além de prover uma plataforma para aproximação dos lojistas e marcas que fornecem os materiais para suas receitas. 
                             </p>
                         </div>
                     </div>
@@ -90,7 +90,9 @@
                             <h2 class="center bebella-text-2"><i class="mdi-action-store large"></i></h2>
                             <h5 class="center">Lojistas e Marcas</h5>
 
-                            <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+                            <p class="light">
+                                Estamos à procura de marcas e lojas que vendam produtos de qualidade que possam elevar a qualidade das receitas em nosso aplicativo. Para tornar-se um parceiro basta preencher o formulário no seguinte link.
+                            </p>
                         </div>
                     </div>
 
@@ -99,7 +101,9 @@
                             <h2 class="center bebella-text-2"><i class="mdi-social-group large"></i></h2>
                             <h5 class="center">Comunidade</h5>
 
-                            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+                            <p class="light">
+                                Permitimos que nossos usuários acessem diversas ofertas dos produtos necessários para fazer aquela receita que vá resolver seus problemas e transformar seu dia. Assim, você não tem só acesso à um conteúdo de qualidade, mas também à produtos de marcas e lojas selecionadas de acordo com sua qualidade e compromisso.
+                            </p>
                         </div>
                     </div>
                 </div>

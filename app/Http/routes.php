@@ -120,6 +120,8 @@ Route::group([
             Route::post('/save', 'ProductController@save');
             Route::post('/edit', 'ProductController@edit');
             
+            Route::get('/groupByCategory', 'ProductController@groupByCategory');
+            
         });
 
         Route::group([
@@ -149,6 +151,8 @@ Route::group([
             Route::post('/paginateWithFilters/{page}', 'RecipeController@paginateWithFilters');
             Route::post('/trendingWithFilters/{page}', 'RecipeController@trendingWithFilters');
             
+            Route::post('/sendForApproval', 'RecipeController@sendForApproval');
+            
         });
         
         Route::group([
@@ -158,6 +162,24 @@ Route::group([
             Route::get('/redirectsByProductOption/{id}', 'ReportController@redirectsByProductOption');
             Route::get('/clicksByProductOption/{id}', 'ReportController@clicksByProductOption');
             Route::get('/viewsByProductOption/{id}', 'ReportController@viewsByProductOption');
+            
+        });
+        
+        Route::group([
+            'prefix' => 'favorite'
+        ], function () {
+            
+            Route::get('/byUser/{id}', 'FavoriteController@byUser');
+            Route::get('/add', 'FavoriteController@add');
+            
+        });
+        
+        Route::group([
+            'prefix' => 'wishlist'
+        ], function () {
+            
+            Route::get('/byUser/{id}', 'WishlistController@byUser');
+            Route::get('/add/{id}', 'WishlistController@add');
             
         });
         

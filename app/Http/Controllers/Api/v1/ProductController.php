@@ -51,4 +51,9 @@ class ProductController extends Controller
                       );
     }
     
+    public function groupByCategory() 
+    {
+        return collect($this->all())->groupBy('category_name');
+    }
+    
 }
