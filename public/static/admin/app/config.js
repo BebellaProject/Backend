@@ -50,6 +50,15 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                     }
                 })
                 
+                .state('recipe_under_approval', {
+                    url: '/recipe/under_approval',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('recipe/under_approval')
+                        }
+                    }
+                })
+
                 .state('category_new', {
                     url: '/category/new',
                     views: {

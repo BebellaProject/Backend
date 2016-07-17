@@ -1,7 +1,7 @@
-Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository', 'RecipeRepository',
-    function ($scope, Recipe, ProductRepository, RecipeRepository) {
+Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository', 'RecipeRepository', 'CurrentRecipe',
+    function ($scope, Recipe, ProductRepository, RecipeRepository, CurrentRecipe) {
         
-        $scope.recipe = new Recipe();
+        $scope.recipe = CurrentRecipe.get();
         
         function formatedUrl() {
             if ( ! $scope.videoUrl) return undefined;
@@ -21,11 +21,9 @@ Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository', 'R
                 alert("Selecione um produto.");
             }
             
-            if ($scope.selectedProduct != "-1") {
+            if ($scope.selectedProduct != '-1') {
                 ProductRepository.find($scope.selectedProduct).then(
                     function onSuccess (product) {
-                        product.exists = true;
-                        
                         $scope.recipe.products.push(product);
                     },
                     function onError (res) {
@@ -34,10 +32,13 @@ Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository', 'R
                 );    
             } else {
                 $scope.recipe.products.push({
-                    exists: false,
                     name: $scope.newProductName,
-                    desc: $scope.newProductDesc
+                    short_desc: $scope.newProductDesc
                 });
+                
+                $scope.newProductName = '';
+                $scope.selectedProduct = '';
+                $scope.newProductDesc = '';
             }
         };
         

@@ -651,7 +651,29 @@ Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
             
             return deferred.promise;
         };
-        
+
+        repository.underApprovalList = function () {
+            var deferred = $q.defer();
+
+            $http.get(api_v1("recipe/underApprovalList")).then(
+                function (res) {
+                    var recipes = _.map(res.data, function (json) {
+                        var recipe = new Recipe();
+
+                        attr(recipe, json);
+
+                        return recipe;
+                    });
+
+                    deferred.resolve(recipes);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
         repository.edit = function (recipe) {
             var deferred = $q.defer();
             
@@ -675,6 +697,25 @@ Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
             var data = JSON.stringify(recipe);
             
             $http.post(api_v1("recipe/save"), data).then(
+                function (res) {
+                    recipe.id = res.data.id;
+                    
+                    deferred.resolve(recipe);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.sendForApproval = function (recipe) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(recipe);
+            
+            $http.post(api_v1("recipe/sendForApproval"), data).then(
                 function (res) {
                     recipe.id = res.data.id;
                     
@@ -1465,6 +1506,21 @@ Bebella.controller('RecipeNewCtrl', ['$scope', 'ChannelRepository', 'RecipeRepos
 
 
 
+Bebella.controller('RecipeUnderApprovalListCtrl', ['$scope', 'RecipeRepository',
+    function ($scope, RecipeRepository) {
+        
+        RecipeRepository.underApprovalList().then(
+            function onSuccess(list) {
+                $scope.recipes = list;
+            },
+            function onError(res) {
+                alert("Houve um erro na obtenção da lista de receitas sob aprovação.");
+            }
+        );
+
+    }
+]);
+
 Bebella.controller('StoreListCtrl', ['$scope', 'StoreRepository',
     function ($scope, StoreRepository) {
     
@@ -1639,6 +1695,15 @@ Bebella.config(['$stateProvider', '$urlRouterProvider',
                     }
                 })
                 
+                .state('recipe_under_approval', {
+                    url: '/recipe/under_approval',
+                    views: {
+                        MainContent: {
+                            templateUrl: view('recipe/under_approval')
+                        }
+                    }
+                })
+
                 .state('category_new', {
                     url: '/category/new',
                     views: {

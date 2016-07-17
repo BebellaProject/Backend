@@ -23,5 +23,10 @@ class ViewController extends Controller
     {
         return view('admin.recipe.edit');
     }
+
+	public function getUnderApproval() 
+	{
+		return view('admin.recipe.under_approval');
+	}
     
 }

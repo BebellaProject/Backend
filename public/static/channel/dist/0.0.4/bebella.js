@@ -55,6 +55,27 @@ Bebella.factory('Recipe', [
 
 
 
+Bebella.service('CurrentRecipe', ['$q', '$localStorage', 'Recipe',
+    function ($q, $localStorage, Recipe) {
+        var service = this;
+    
+        service.get = function () {
+            if (! $localStorage.current_recipe) {
+                $localStorage.current_recipe = new Recipe();
+            }
+            
+            return $localStorage.current_recipe;
+        };
+    
+        service.clear = function () {
+            $localStorage.current_recipe = new Recipe();
+        };
+    
+    }
+]);
+
+
+
 Bebella.service('ProductRepository', ['$http', '$q', 'Product',
     function ($http, $q, Product) {
         var repository = this;
@@ -166,6 +187,112 @@ Bebella.service('ProductRepository', ['$http', '$q', 'Product',
     }
 ]);
 
+Bebella.service('RecipeRepository', ['$http', '$q', 'Recipe',
+    function ($http, $q, Recipe) {
+        var repository = this;
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('recipe/find/' + id)).then(
+                function (res) {
+                    var recipe = new Recipe();
+                    
+                    attr(recipe, res.data);
+                    
+                    deferred.resolve(recipe);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+
+            return deferred.promise;
+        };
+        
+        repository.all = function () {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("recipe/all")).then(
+                function (res) {
+                    var recipes = _.map(res.data, function (json) {
+                        var recipe = new Recipe();
+                        
+                        attr(recipe, json);
+                        
+                        return recipe;
+                    });
+                    
+                    deferred.resolve(recipes);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.edit = function (recipe) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(recipe);
+            
+            $http.post(api_v1("recipe/edit"), data).then(
+                 function (res) {
+                     deferred.resolve(recipe);
+                 },
+                 function (res) {
+                     deferred.reject(res);
+                 }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (recipe) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(recipe);
+            
+            $http.post(api_v1("recipe/save"), data).then(
+                function (res) {
+                    recipe.id = res.data.id;
+                    
+                    deferred.resolve(recipe);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.sendForApproval = function (recipe) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(recipe);
+            
+            $http.post(api_v1("recipe/sendForApproval"), data).then(
+                function (res) {
+                    recipe.id = res.data.id;
+                    
+                    deferred.resolve(recipe);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+    }
+]);
+
+
+
+
 Bebella.controller('ProfileIndexCtrl', ['$scope',
     function ($scope) {
         
@@ -194,10 +321,10 @@ Bebella.controller('RecipeListCtrl', ['$scope',
 ]);
 
 
-Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository',
-    function ($scope, Recipe, ProductRepository) {
+Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository', 'RecipeRepository', 'CurrentRecipe',
+    function ($scope, Recipe, ProductRepository, RecipeRepository, CurrentRecipe) {
         
-        $scope.recipe = new Recipe();
+        $scope.recipe = CurrentRecipe.get();
         
         function formatedUrl() {
             if ( ! $scope.videoUrl) return undefined;
@@ -217,14 +344,25 @@ Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository',
                 alert("Selecione um produto.");
             }
             
-            ProductRepository.find($scope.selectedProduct).then(
-                function onSuccess (product) {
-                    $scope.recipe.products.push(product);
-                },
-                function onError (res) {
-                    alert("Houve um erro na obtenção do produto selecionado");
-                }
-            );
+            if ($scope.selectedProduct != '-1') {
+                ProductRepository.find($scope.selectedProduct).then(
+                    function onSuccess (product) {
+                        $scope.recipe.products.push(product);
+                    },
+                    function onError (res) {
+                        alert("Houve um erro na obtenção do produto selecionado");
+                    }
+                );    
+            } else {
+                $scope.recipe.products.push({
+                    name: $scope.newProductName,
+                    short_desc: $scope.newProductDesc
+                });
+                
+                $scope.newProductName = '';
+                $scope.selectedProduct = '';
+                $scope.newProductDesc = '';
+            }
         };
         
         $scope.insertImageStep = function () {
@@ -271,6 +409,14 @@ Bebella.controller('RecipeNewCtrl', ['$scope', 'Recipe', 'ProductRepository',
                 return alert("Número de tags acima do limite definido.");
             }
             
+            RecipeRepository.sendForApproval($scope.recipe).then(
+                function onSuccess (msg) {
+                    alert(msg);
+                },
+                function onError (res) {
+                    alert("Houve um erro no envio da receita.");
+                }
+            );
         };
         
         ProductRepository.groupByCategory().then(

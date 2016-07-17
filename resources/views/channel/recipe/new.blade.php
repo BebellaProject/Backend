@@ -204,22 +204,41 @@
                 <i class="mdi-content-add"></i>
             </a>
         </div>
+        
+        <div class="col s12 m12 l12" ng-show="selectedProduct == '-1'">
+            
+            <div class="input-field col s12 m12 l12">
+                <input ng-model="newProductName" id="input10" type="text" class="validate">
+                <label for="input10" ng-class="{active: newProductName}">Nome do Produto</label>
+            </div>
+            
+            <div class="input-field col s12 m12 l12">
+                <textarea id="newpdesc" ng-model="newProductDesc" style="height: 40px;" class="materialize-textarea"></textarea>
+                <label for="newpdesc" ng-class="{active: newProductDesc}">Descrição</label>
+            </div>
+            
+        </div>
 
     </div>
 
     <div class="row" ng-repeat="product in recipe.products">
-        <div class="col m3 l2 hide-on-small-only">
+        <div ng-if="!product.image_path" class="col m3 l2 hide-on-small-only">
+            <img style="width: 100%; max-width: 125px; max-height: 125px;" src="http://placehold.it/150x150">
+        </div>
+        
+        <div ng-if="product.image_path" class="col m3 l2 hide-on-small-only">
             <img style="width: 100%; max-width: 125px; max-height: 125px;" src="<% $APP_URL %>/{{ product.image_path }}">
         </div>
-
+        
         <div class="col s10 m7 l8">
             <p class="title" style="margin-top: 0px; margin-bottom: 2px;">{{ product.name }}</p>
             <p class="caption" style="margin-top: 0px; margin-bottom: 0px;">{{ product.short_desc }}</p>
         </div>
 
         <div class="col s2 m2 l2">
-            <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text" style="margin-left: 65px; margin-top: 10px;"><i class="mdi-action-delete"></i></a>
+            <a class="btn-floating btn-flat waves-effect waves-light bebella-color-3 white-text right" style="margin-left: 65px; margin-top: 10px;"><i class="mdi-action-delete"></i></a>
         </div>
+        
 
     </div>
 

@@ -151,6 +151,7 @@ Route::group([
             Route::post('/paginateWithFilters/{page}', 'RecipeController@paginateWithFilters');
             Route::post('/trendingWithFilters/{page}', 'RecipeController@trendingWithFilters');
             
+			Route::get('/underApprovalList', 'RecipeController@underApprovalList');
             Route::post('/sendForApproval', 'RecipeController@sendForApproval');
             
         });
@@ -170,7 +171,8 @@ Route::group([
         ], function () {
             
             Route::get('/byUser/{id}', 'FavoriteController@byUser');
-            Route::get('/add', 'FavoriteController@add');
+            Route::get('/add/{id}', 'FavoriteController@add');
+            Route::get('/remove/{id}', 'FavoriteController@remove');
             
         });
         
@@ -283,7 +285,8 @@ Route::group([
         Route::get('/new', 'ViewController@getNew');
         Route::get('/list', 'ViewController@getList');
         Route::get('/edit', 'ViewController@getEdit');
-        
+        Route::get('/under_approval', 'ViewController@getUnderApproval');
+
     });
     
     Route::group([

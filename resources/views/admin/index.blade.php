@@ -206,6 +206,8 @@
                                             </li>
                                             <li><a ui-sref="recipe_list">Lista</a>
                                             </li>
+											<li><a ui-sref="recipe_under_approval">Sob Aprovação</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>

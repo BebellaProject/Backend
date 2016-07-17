@@ -5,6 +5,8 @@ namespace Bebella\Http\Controllers\Api\v1;
 use Auth;
 use Event;
 use Illuminate\Http\Request;
+use Bebella\Product;
+use Bebella\Favorite;
 use Bebella\Recipe;
 use Bebella\RecipeTag;
 use Bebella\RecipeStep;
@@ -22,6 +24,7 @@ class RecipeController extends Controller
 
     public function find($id)
     {   
+		$user = Auth::guard('api')->user();
         $recipe = Recipe::where('recipes.id', $id)
                 ->join('channels', function ($join)
                 {
@@ -33,6 +36,13 @@ class RecipeController extends Controller
                 ->first();
                 
         Event::fire(new RecipeWasViewed($recipe));
+
+		$fav = Favorite::where('user_id', $user->id)
+					   ->where('recipe_id', $recipe->id)
+					   ->where('active', true)
+					   ->first();
+
+		$recipe["is_liked"] = (!is_null($fav));
 
         $recipe["tags"] = RecipeTag::where('recipe_id', $id)
                 ->where('active', true)
@@ -249,6 +259,16 @@ class RecipeController extends Controller
                         ->get();
     }
 
+	public function underApprovalList() 
+	{
+		return Recipe::where('recipes.is_under_approval', true)
+					 ->join('channels', function ($join) {
+						$join->on('recipes.channel_id', '=', 'channels.id');
+					 })
+					 ->select('recipes.*', 'channels.name as channel_name')
+					 ->get();
+	}
+
     public function trending()
     {
         return Recipe::where('recipes.active', true)
@@ -275,6 +295,11 @@ class RecipeController extends Controller
         $recipe->is_under_approval = true;
         
         $recipe->has_video = $request->has_video;
+
+		if ($recipe->has_video) 
+		{
+			$recipe->video_id = $request->video_id;
+		}
         
         $recipe->save();
         
@@ -312,18 +337,39 @@ class RecipeController extends Controller
                 $step->save();
             }
         }
+
         
         foreach ($request->products as $key => $value)
         {
-            $product = new RecipeProduct;
+            if (array_key_exists("id", $value) && !is_null($value["id"])) 
+            {
+                $product = new RecipeProduct;
 
-            $product->recipe_id = $recipe->id;
-            $product->product_id = $value["product_id"];
+                $product->recipe_id = $recipe->id;
+                $product->product_id = $value["id"];
 
-            $product->save();
+                $product->save();
+            }
+            else 
+            {
+                $product = new Product;
+                
+                $product->name = $value["name"];
+                $product->short_desc = $value["short_desc"];
+                $product->active = false;
+                
+                $product->save();
+                
+                $rel = new RecipeProduct;
+                
+                $rel->recipe_id = $recipe->id;
+                $rel->product_id = $product->id;
+                
+                $rel->save();
+            }
         }
         
-        
+        return "Receita enviada para aprovação com sucesso.";
     }
     
     public function save(Request $request)

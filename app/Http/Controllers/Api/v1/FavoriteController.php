@@ -17,9 +17,17 @@ class FavoriteController extends Controller
     
     public function byUser($id) 
     {
-        return Favorite::where('favorites.active', true)
-                       ->where('favorites.user_id', $id)
-                       ->get();
+        return Recipe::where('recipes.active', true)
+					 ->where('favorites.user_id', $id)
+					 ->where('favorites.active', true)
+					 ->join('favorites', function ($join) {
+						$join->on('recipes.id', '=', 'favorites.recipe_id');
+					 })
+					 ->join('channels', function ($join) {
+						$join->on('recipes.channel_id', '=', 'channels.id');
+					 })
+					 ->select('recipes.*', 'channels.name as channel_name')
+					 ->get();
     }
     
     public function add($id) 
@@ -28,7 +36,7 @@ class FavoriteController extends Controller
         
         $fav = new Favorite;
         
-        $fav->user_id = Auth::guard('user')->user()->id;
+        $fav->user_id = Auth::guard('api')->user()->id;
         $fav->recipe_id = $id;
         
         $fav->save();
@@ -37,7 +45,22 @@ class FavoriteController extends Controller
         
         $recipe->save();
         
-        return $fav;
+        return 1;
     }
     
+	public function remove($id) 
+    {
+        $recipe = Recipe::find($id);
+        
+        Favorite::where('recipe_id', $id)
+			   ->where('user_id', Auth::guard('api')->user()->id)
+			   ->update(['active' => false]);
+
+        $recipe->like_count -= 1;
+        
+        $recipe->save();
+        
+        return 1;
+    }
+
 }
